@@ -1,666 +1,781 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>食道楽 ひさご｜本格和牛と手打ち蕎麦 — 石川本店・須賀川店・白河店</title>
-<meta name="description" content="米沢牛・山形牛と手打ち蕎麦の食道楽ひさご。福島県内3店舗（石川本店・須賀川店・白河店）。ご予約・採用情報はこちら。">
-<meta property="og:title" content="食道楽 ひさご — 本格和牛と手打ち蕎麦（福島県内3店舗）">
-<meta property="og:description" content="米沢牛・山形牛と手打ち蕎麦。石川本店・須賀川店・白河店">
-<meta property="og:type" content="restaurant.restaurant">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>食道楽ひさご｜焼肉×そば 須賀川本店・白河店・石川店</title>
+<meta name="description" content="日本にここだけ。焼肉とそばの店、食道楽ひさご。福島県 須賀川・白河・石川の3店舗。営業カレンダー・お品書き・スタッフ募集はこちら。" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"Restaurant",
-  "name":"食道楽 ひさご",
-  "servesCuisine":["焼肉","蕎麦","和食"],
-  "priceRange":"¥¥¥",
-  "department":[
-    {"@type":"Restaurant","name":"食道楽ひさご 石川本店","address":{"@type":"PostalAddress","addressRegion":"福島県","addressLocality":"石川郡石川町塩沢字大日向71-2","addressCountry":"JP"}},
-    {"@type":"Restaurant","name":"食道楽ひさご 須賀川店","telephone":"+81-248-73-0722","address":{"@type":"PostalAddress","addressRegion":"福島県","addressLocality":"須賀川市茶畑町5","postalCode":"962-0028","addressCountry":"JP"}},
-    {"@type":"Restaurant","name":"食道楽ひさご 白河店","address":{"@type":"PostalAddress","addressRegion":"福島県","addressLocality":"白河市老久保49-15","addressCountry":"JP"}}
-  ]
-}
-</script>
-
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Yuji+Boku&display=swap" rel="stylesheet">
 <style>
   :root{
-    --burgundy:#6B1F2E;
-    --burgundy-d:#4A1520;
-    --cream:#F8F4EC;
-    --cream-d:#EBE3D2;
-    --ink:#1A0F0A;
-    --gold:#B8893A;
-    --soba:#4A3E33;
-    --mute:#7A6F65;
-    --line:#D9CFB9;
-    --red:#C0392B;
+    --sumi:#1b1512;
+    --sumi-2:#241c17;
+    --sumi-3:#2e241d;
+    --ember:#df5a1c;
+    --ember-lt:#f0813f;
+    --ember-glow:#ff7a36;
+    --kinari:#f2e7d4;
+    --kinari-dim:#b3a48f;
+    --soba:#9aa766;
+    --gold:#d2a24c;
+    --line:#06c755;
   }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
   body{
-    font-family:"Noto Sans JP",-apple-system,system-ui,sans-serif;
-    color:var(--ink);
-    background:var(--cream);
-    line-height:1.8;
-    font-size:15px;
-    letter-spacing:0.04em;
+    background:var(--sumi);
+    color:var(--kinari);
+    font-family:'Zen Kaku Gothic New',sans-serif;
+    font-weight:400;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
   }
-  .serif{font-family:"Noto Serif JP",serif}
-  .wrap{max-width:880px;margin:0 auto;padding:0 20px}
+  /* --- grain overlay --- */
+  body::before{
+    content:"";
+    position:fixed;inset:0;
+    pointer-events:none;z-index:9999;
+    opacity:.45;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    mix-blend-mode:overlay;
+  }
+  h1,h2,h3,.mincho{font-family:'Shippori Mincho',serif;}
+  .brush{font-family:'Yuji Boku',serif;}
+  a{color:inherit;text-decoration:none;}
+  section{position:relative;}
 
-  /* TOP NAV */
-  .topnav{
-    position:sticky;top:0;z-index:100;
-    background:rgba(248,244,236,0.95);
-    backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line);
-    padding:14px 0;
+  /* --- nav --- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px clamp(18px,4vw,56px);
+    background:rgba(27,21,18,0);
+    transition:background .4s ease, padding .4s ease, border-color .4s ease;
+    border-bottom:1px solid rgba(242,231,212,0);
   }
-  .topnav .wrap{display:flex;align-items:center;justify-content:space-between}
-  .logo{font-family:"Noto Serif JP",serif;font-size:18px;font-weight:700;color:var(--burgundy);letter-spacing:0.12em}
-  .logo .sub{font-size:10px;color:var(--mute);letter-spacing:0.3em;display:block;margin-top:2px}
-  .navlinks{display:flex;gap:18px;font-size:12px;letter-spacing:0.15em}
-  .navlinks a{color:var(--ink);text-decoration:none}
-  .navlinks a:hover{color:var(--burgundy)}
-  @media(max-width:600px){
-    .navlinks{display:none}
+  nav.scrolled{
+    background:rgba(22,17,14,.92);
+    backdrop-filter:blur(10px);
+    padding-top:10px;padding-bottom:10px;
+    border-bottom:1px solid rgba(242,231,212,.08);
   }
+  .logo{display:flex;align-items:center;gap:11px;}
+  .logo .gourd{width:30px;height:30px;flex:none;}
+  .logo .gourd path{fill:var(--ember);}
+  .logo b{font-family:'Shippori Mincho',serif;font-weight:800;font-size:1.18rem;letter-spacing:.06em;}
+  .logo b span{color:var(--ember-lt);}
+  .navlinks{display:flex;align-items:center;gap:clamp(14px,2.4vw,34px);}
+  .navlinks a.link{
+    font-size:.86rem;letter-spacing:.13em;color:var(--kinari-dim);
+    font-weight:500;transition:color .25s;
+  }
+  .navlinks a.link:hover{color:var(--kinari);}
+  .nav-cta{
+    background:var(--ember);color:#fff;font-weight:700;
+    padding:9px 18px;border-radius:2px;font-size:.84rem;letter-spacing:.08em;
+    box-shadow:0 0 0 0 rgba(223,90,28,.5);
+    animation:pulse 2.6s infinite;
+    transition:transform .2s;
+  }
+  .nav-cta:hover{transform:translateY(-1px);}
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(223,90,28,.45);}
+    70%{box-shadow:0 0 0 12px rgba(223,90,28,0);}
+    100%{box-shadow:0 0 0 0 rgba(223,90,28,0);}
+  }
+  .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;}
+  .burger span{width:24px;height:2px;background:var(--kinari);display:block;transition:.3s;}
 
-  /* HERO */
+  /* --- hero --- */
   .hero{
-    position:relative;
-    padding:80px 0 64px;
-    background:linear-gradient(135deg,var(--burgundy) 0%,var(--burgundy-d) 100%);
-    color:var(--cream);
-    overflow:hidden;
+    min-height:100svh;display:flex;flex-direction:column;
+    justify-content:center;align-items:center;text-align:center;
+    padding:120px clamp(18px,5vw,40px) 60px;
+    position:relative;overflow:hidden;
   }
-  .hero::before{
-    content:"";position:absolute;inset:0;
-    background-image:
-      radial-gradient(circle at 20% 30%, rgba(184,137,58,0.15) 0%, transparent 50%),
-      radial-gradient(circle at 80% 70%, rgba(184,137,58,0.1) 0%, transparent 50%);
-    pointer-events:none;
+  .hero-bg{
+    position:absolute;inset:0;z-index:-2;
+    background-color:#100c0a;
+    background-image:url("https://lh3.googleusercontent.com/place-photos/AJRVUZMx-zjulFIVOEfd1OphICrHO66PMZoiCLAAd2vJ6Uola8QCcBTTfVk5gf9Z7BA4kliUjJwvuRf4ZnJmLm8HkBKDUzQX4EzzElsI72fqASuYjiDssxA6wH7IU5Iqdp_DB9Ty_0lO0vMyRxlpCxlFGRdFUw=s4800-w800-h600");
+    background-size:cover;background-position:center;
+    filter:brightness(.4) saturate(1.1);
+    transform:scale(1.08);
+    animation:slowzoom 24s ease-in-out infinite alternate;
   }
-  .hero .wrap{position:relative}
-  .hero .stamp{
-    display:inline-block;font-size:11px;letter-spacing:0.4em;
-    border:1px solid var(--gold);color:var(--gold);
-    padding:6px 14px;margin-bottom:24px;
+  @keyframes slowzoom{to{transform:scale(1.0);}}
+  .hero::after{
+    content:"";position:absolute;inset:0;z-index:-1;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 78%, rgba(223,90,28,.42), transparent 70%),
+      linear-gradient(180deg, rgba(20,15,12,.7) 0%, rgba(20,15,12,.2) 40%, rgba(20,15,12,.95) 100%);
+  }
+  .hero .since{
+    font-size:.8rem;letter-spacing:.4em;color:var(--gold);
+    margin-bottom:26px;opacity:0;animation:rise .9s .2s forwards;
   }
   .hero h1{
-    font-family:"Noto Serif JP",serif;
-    font-size:clamp(32px,6vw,52px);
-    line-height:1.3;
-    margin-bottom:20px;
-    font-weight:700;
+    font-weight:800;line-height:1.12;letter-spacing:.04em;
+    font-size:clamp(2.9rem,9vw,6.4rem);
+    text-shadow:0 4px 40px rgba(0,0,0,.6);
   }
-  .hero h1 .accent{color:var(--gold)}
+  .hero h1 .row{display:block;overflow:hidden;}
+  .hero h1 .row span{display:inline-block;opacity:0;transform:translateY(110%);animation:rise .9s forwards;}
+  .hero h1 .row:nth-child(1) span{animation-delay:.35s;}
+  .hero h1 .row:nth-child(2) span{animation-delay:.5s;}
+  .hero h1 .x{
+    color:var(--ember-lt);font-family:'Yuji Boku',serif;font-weight:400;
+    padding:0 .12em;font-size:.82em;vertical-align:.04em;
+    display:inline-block;
+  }
   .hero .lead{
-    font-size:clamp(15px,2vw,17px);
-    max-width:560px;
-    opacity:0.92;
+    margin-top:30px;font-family:'Shippori Mincho',serif;
+    font-size:clamp(1rem,2.6vw,1.45rem);font-weight:500;
+    letter-spacing:.16em;color:var(--kinari);
+    opacity:0;animation:rise .9s .8s forwards;
   }
-  .hero .stores-mini{
-    display:flex;gap:24px;margin-top:40px;flex-wrap:wrap;
-    font-size:13px;letter-spacing:0.15em;
+  .hero .sub{
+    margin-top:14px;font-size:.92rem;color:var(--kinari-dim);letter-spacing:.08em;
+    opacity:0;animation:rise .9s .95s forwards;
   }
-  .hero .stores-mini span{
-    border-left:2px solid var(--gold);padding-left:10px;
+  .hero-btns{
+    margin-top:40px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center;
+    opacity:0;animation:rise .9s 1.1s forwards;
   }
-
-  /* CONCEPT */
-  .concept{padding:72px 0;text-align:center}
-  .concept .label{font-size:11px;color:var(--burgundy);letter-spacing:0.4em;margin-bottom:18px}
-  .concept h2{font-family:"Noto Serif JP",serif;font-size:clamp(24px,4vw,32px);margin-bottom:24px;line-height:1.5}
-  .concept p{max-width:580px;margin:0 auto 12px;color:var(--soba)}
-
-  .features{
-    display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:24px;margin-top:48px;text-align:left;
-  }
-  .feature{
-    background:#fff;
-    border:1px solid var(--line);
-    padding:28px 24px;
-  }
-  .feature .ic{font-size:24px;color:var(--gold);margin-bottom:12px}
-  .feature h3{font-family:"Noto Serif JP",serif;font-size:18px;margin-bottom:8px;color:var(--burgundy)}
-  .feature p{font-size:13px;color:var(--soba);line-height:1.8}
-
-  /* STORES */
-  .stores{padding:72px 0;background:var(--cream-d)}
-  .stores .label{font-size:11px;color:var(--burgundy);letter-spacing:0.4em;margin-bottom:18px;text-align:center}
-  .stores h2{font-family:"Noto Serif JP",serif;font-size:clamp(24px,4vw,32px);text-align:center;margin-bottom:48px}
-
-  .tabs{display:flex;justify-content:center;gap:0;margin-bottom:32px;border-bottom:1px solid var(--line)}
-  .tab{
-    padding:12px 24px;cursor:pointer;
-    font-family:"Noto Serif JP",serif;font-size:15px;
-    color:var(--mute);
-    border-bottom:2px solid transparent;
-    transition:0.2s;
-    background:none;border-top:none;border-left:none;border-right:none;
-  }
-  .tab.active{color:var(--burgundy);border-bottom-color:var(--burgundy);font-weight:700}
-  .tab:hover{color:var(--burgundy)}
-
-  .store-card{display:none;background:#fff;border:1px solid var(--line);padding:32px}
-  .store-card.active{display:block}
-  .store-card .name{font-family:"Noto Serif JP",serif;font-size:24px;color:var(--burgundy);margin-bottom:8px}
-  .store-card .badge{display:inline-block;background:var(--gold);color:#fff;font-size:10px;letter-spacing:0.2em;padding:4px 10px;margin-bottom:18px}
-  .store-info{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-top:20px}
-  .info-item .k{font-size:10px;color:var(--mute);letter-spacing:0.25em;margin-bottom:4px}
-  .info-item .v{font-size:14px;color:var(--ink)}
-  .info-item .v.tel{font-family:"Noto Serif JP",serif;font-size:18px;color:var(--burgundy);font-weight:700}
-  .store-cta{margin-top:24px;display:flex;gap:12px;flex-wrap:wrap}
+  @keyframes rise{to{opacity:1;transform:translateY(0);}}
   .btn{
-    display:inline-block;padding:12px 24px;
-    text-decoration:none;font-size:13px;letter-spacing:0.15em;
-    transition:0.2s;
+    padding:15px 30px;border-radius:2px;font-weight:700;letter-spacing:.1em;
+    font-size:.92rem;transition:transform .2s, box-shadow .25s, background .25s;
+    display:inline-flex;align-items:center;gap:9px;cursor:pointer;border:none;
   }
-  .btn-primary{background:var(--burgundy);color:var(--cream)}
-  .btn-primary:hover{background:var(--burgundy-d)}
-  .btn-outline{border:1px solid var(--burgundy);color:var(--burgundy)}
-  .btn-outline:hover{background:var(--burgundy);color:var(--cream)}
+  .btn-fill{background:var(--ember);color:#fff;box-shadow:0 10px 30px -8px rgba(223,90,28,.7);}
+  .btn-fill:hover{transform:translateY(-2px);box-shadow:0 16px 40px -8px rgba(223,90,28,.85);}
+  .btn-ghost{background:rgba(242,231,212,.06);color:var(--kinari);border:1px solid rgba(242,231,212,.28);}
+  .btn-ghost:hover{background:rgba(242,231,212,.13);transform:translateY(-2px);}
+  .scrollcue{
+    position:absolute;bottom:26px;left:50%;transform:translateX(-50%);
+    font-size:.66rem;letter-spacing:.3em;color:var(--kinari-dim);
+    writing-mode:vertical-rl;opacity:0;animation:rise 1s 1.6s forwards;
+  }
+  .scrollcue::after{content:"";display:block;width:1px;height:34px;background:linear-gradient(var(--ember),transparent);margin:10px auto 0;}
 
-  /* MENU */
-  .menu{padding:72px 0;text-align:center}
-  .menu .label{font-size:11px;color:var(--burgundy);letter-spacing:0.4em;margin-bottom:18px}
-  .menu h2{font-family:"Noto Serif JP",serif;font-size:clamp(24px,4vw,32px);margin-bottom:48px}
-  .menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);text-align:left}
-  .menu-item{background:#fff;padding:24px}
-  .menu-item .badge{display:inline-block;background:var(--burgundy);color:var(--cream);font-size:10px;letter-spacing:0.2em;padding:3px 10px;margin-bottom:10px}
-  .menu-item h3{font-family:"Noto Serif JP",serif;font-size:17px;margin-bottom:6px;color:var(--ink)}
-  .menu-item p{font-size:12px;color:var(--mute);line-height:1.7}
+  /* --- section frame --- */
+  .wrap{max-width:1180px;margin:0 auto;padding:clamp(70px,11vw,140px) clamp(20px,5vw,40px);}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:.74rem;letter-spacing:.32em;color:var(--ember-lt);
+    font-weight:700;margin-bottom:18px;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--ember);}
+  .sec-title{
+    font-size:clamp(1.9rem,5vw,3.1rem);font-weight:800;line-height:1.3;
+    letter-spacing:.03em;margin-bottom:14px;
+  }
+  .sec-title .em{color:var(--ember-lt);}
+  .reveal{opacity:0;transform:translateY(34px);transition:opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1);}
+  .reveal.in{opacity:1;transform:translateY(0);}
 
-  /* CALENDAR */
-  .calendar{padding:72px 0;background:var(--cream-d)}
-  .calendar .label{font-size:11px;color:var(--burgundy);letter-spacing:0.4em;margin-bottom:18px;text-align:center}
-  .calendar h2{font-family:"Noto Serif JP",serif;font-size:clamp(24px,4vw,32px);text-align:center;margin-bottom:36px}
-  .cal-wrap{max-width:560px;margin:0 auto;background:#fff;padding:32px;border:1px solid var(--line)}
-  .cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
-  .cal-head button{background:none;border:1px solid var(--line);width:32px;height:32px;cursor:pointer;font-size:14px;color:var(--burgundy)}
-  .cal-head button:hover{background:var(--burgundy);color:#fff;border-color:var(--burgundy)}
-  .cal-month{font-family:"Noto Serif JP",serif;font-size:20px;color:var(--burgundy)}
-  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
-  .cal-dow{padding:8px 0;text-align:center;font-size:11px;color:var(--mute);letter-spacing:0.15em;font-weight:500}
-  .cal-day{
-    aspect-ratio:1;
+  /* --- story --- */
+  #story{background:
+     linear-gradient(180deg,var(--sumi),var(--sumi-2));}
+  .story-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(30px,5vw,72px);align-items:center;}
+  .story-copy p{color:var(--kinari-dim);margin-bottom:18px;font-size:1.02rem;}
+  .story-copy p strong{color:var(--kinari);font-weight:700;}
+  .story-copy .pull{
+    font-family:'Shippori Mincho',serif;font-size:clamp(1.3rem,3vw,1.8rem);
+    font-weight:700;color:var(--kinari);line-height:1.7;margin:8px 0 28px;
+    border-left:3px solid var(--ember);padding-left:20px;
+  }
+  .timeline{display:flex;gap:0;margin-top:34px;flex-wrap:wrap;}
+  .tl-item{flex:1;min-width:130px;padding:18px 16px;border-top:2px solid rgba(242,231,212,.14);position:relative;}
+  .tl-item::before{content:"";position:absolute;top:-6px;left:0;width:10px;height:10px;border-radius:50%;background:var(--ember);}
+  .tl-item .yr{font-family:'Shippori Mincho',serif;font-weight:700;color:var(--ember-lt);font-size:1.05rem;}
+  .tl-item .ev{font-size:.85rem;color:var(--kinari-dim);margin-top:2px;}
+  .story-photo{
+    position:relative;border-radius:3px;overflow:hidden;aspect-ratio:4/5;
+    background:#100c0a center/cover no-repeat;
+    background-image:url("https://lh3.googleusercontent.com/place-photos/AJRVUZM7h4wy5QBkzYkH1Ca11xPhN3x1K8YxG1SbTcxJlVRmKetzDd76QEMoSXRvv8zQtVCCHx_bB3g_yF07jjOm-oGEsTnP5EJHlVGvaRR-HP1N3umLMk0hAeeqPuYFJmWBUU1L_6jdKo_HQgIo_-KwfSeozA=s4800-w800-h600");
+    box-shadow:0 30px 70px -20px rgba(0,0,0,.8);
+  }
+  .story-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(20,15,12,.6));}
+  .story-photo .stamp{
+    position:absolute;right:18px;bottom:16px;z-index:2;
+    font-family:'Yuji Boku',serif;font-size:1.5rem;color:var(--kinari);
+    background:rgba(223,90,28,.92);padding:8px 14px;border-radius:2px;
+    line-height:1.2;text-align:center;letter-spacing:.05em;
+  }
+
+  /* --- menu --- */
+  #menu{background:var(--sumi-2);}
+  .menu-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;margin-bottom:46px;}
+  .menu-head p{color:var(--kinari-dim);max-width:420px;font-size:.96rem;}
+  .menu-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+  .dish{
+    position:relative;border-radius:3px;overflow:hidden;aspect-ratio:3/4;
+    background:#100c0a center/cover no-repeat;
+    display:flex;align-items:flex-end;
+    transition:transform .4s cubic-bezier(.2,.7,.2,1);
+  }
+  .dish:hover{transform:translateY(-6px);}
+  .dish::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,15,12,0) 35%,rgba(15,11,9,.94));transition:background .4s;}
+  .dish:hover::after{background:linear-gradient(180deg,rgba(223,90,28,.16) 25%,rgba(15,11,9,.95));}
+  .dish .info{position:relative;z-index:2;padding:20px 18px;}
+  .dish .info .ja{font-family:'Shippori Mincho',serif;font-size:1.18rem;font-weight:700;}
+  .dish .info .desc{font-size:.78rem;color:var(--kinari-dim);margin-top:3px;letter-spacing:.02em;}
+  .dish .tag{
+    position:absolute;top:14px;left:14px;z-index:2;
+    background:rgba(27,21,18,.82);border:1px solid rgba(242,231,212,.2);
+    font-size:.66rem;letter-spacing:.14em;padding:4px 9px;border-radius:2px;color:var(--ember-lt);font-weight:700;
+  }
+  .menu-note{margin-top:30px;font-size:.82rem;color:var(--kinari-dim);text-align:center;letter-spacing:.04em;}
+
+  /* --- shops --- */
+  #shops{background:linear-gradient(180deg,var(--sumi-2),var(--sumi));}
+  .tabs{display:flex;gap:8px;margin-bottom:30px;flex-wrap:wrap;}
+  .tab{
+    background:transparent;border:1px solid rgba(242,231,212,.18);
+    color:var(--kinari-dim);font-family:'Shippori Mincho',serif;font-weight:700;
+    padding:12px 22px;border-radius:2px;cursor:pointer;font-size:1rem;
+    letter-spacing:.06em;transition:.25s;
+  }
+  .tab:hover{color:var(--kinari);border-color:rgba(242,231,212,.4);}
+  .tab.active{background:var(--ember);border-color:var(--ember);color:#fff;}
+  .shop-panel{display:none;}
+  .shop-panel.active{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(24px,4vw,48px);}
+  .shop-photo{
+    border-radius:3px;overflow:hidden;aspect-ratio:16/11;
+    background:#100c0a center/cover no-repeat;position:relative;
+    box-shadow:0 26px 60px -22px rgba(0,0,0,.8);
+  }
+  .shop-photo .rate{
+    position:absolute;left:14px;bottom:14px;
+    background:rgba(27,21,18,.88);padding:6px 12px;border-radius:2px;
+    font-size:.82rem;letter-spacing:.05em;
+  }
+  .shop-photo .rate b{color:var(--gold);font-family:'Shippori Mincho',serif;}
+  .shop-info h3{font-size:1.7rem;font-weight:800;margin-bottom:4px;}
+  .shop-info .kana{font-size:.78rem;color:var(--ember-lt);letter-spacing:.2em;margin-bottom:18px;}
+  .info-row{display:flex;gap:14px;padding:13px 0;border-bottom:1px solid rgba(242,231,212,.09);font-size:.92rem;}
+  .info-row .lbl{flex:none;width:74px;color:var(--ember-lt);font-weight:700;font-size:.8rem;letter-spacing:.08em;padding-top:2px;}
+  .info-row .val{color:var(--kinari);}
+  .info-row .val .dim{color:var(--kinari-dim);font-size:.84rem;}
+  .shop-actions{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap;}
+  .mini-btn{
+    font-size:.82rem;padding:11px 18px;border-radius:2px;font-weight:700;letter-spacing:.06em;
+    display:inline-flex;align-items:center;gap:7px;transition:.2s;
+  }
+  .mini-btn.map{background:rgba(242,231,212,.07);border:1px solid rgba(242,231,212,.25);color:var(--kinari);}
+  .mini-btn.map:hover{background:rgba(242,231,212,.14);}
+  .mini-btn.tel{background:var(--ember);color:#fff;}
+  .mini-btn.tel:hover{transform:translateY(-2px);}
+
+  /* --- calendar --- */
+  .cal-block{
+    margin-top:54px;background:var(--sumi-3);
+    border:1px solid rgba(242,231,212,.09);border-radius:4px;
+    padding:clamp(22px,3.5vw,40px);
+    display:grid;grid-template-columns:1fr 1.15fr;gap:clamp(24px,4vw,52px);align-items:center;
+  }
+  .cal-intro .eyebrow{margin-bottom:14px;}
+  .cal-intro h3{font-size:1.5rem;font-weight:800;margin-bottom:12px;line-height:1.4;}
+  .cal-intro p{color:var(--kinari-dim);font-size:.92rem;margin-bottom:10px;}
+  .cal-legend{display:flex;gap:18px;margin-top:16px;flex-wrap:wrap;}
+  .cal-legend span{display:flex;align-items:center;gap:7px;font-size:.8rem;color:var(--kinari-dim);}
+  .dot{width:11px;height:11px;border-radius:50%;display:inline-block;}
+  .dot.close{background:#7a3b2a;}
+  .dot.open{background:var(--soba);}
+  .calendar{background:var(--sumi-2);border-radius:3px;padding:18px;border:1px solid rgba(242,231,212,.07);}
+  .cal-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+  .cal-top button{
+    background:rgba(242,231,212,.07);border:1px solid rgba(242,231,212,.18);color:var(--kinari);
+    width:32px;height:32px;border-radius:2px;cursor:pointer;font-size:1rem;transition:.2s;
+  }
+  .cal-top button:hover{background:var(--ember);border-color:var(--ember);}
+  .cal-title{font-family:'Shippori Mincho',serif;font-weight:700;font-size:1.15rem;letter-spacing:.05em;}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+  .cal-grid .wd{text-align:center;font-size:.68rem;color:var(--kinari-dim);padding:4px 0;letter-spacing:.05em;}
+  .cal-grid .wd.sun{color:#c46;}
+  .cal-grid .wd.sat{color:#5a8;}
+  .cal-cell{
+    aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    border-radius:2px;font-size:.8rem;background:rgba(242,231,212,.03);position:relative;
+  }
+  .cal-cell.empty{background:transparent;}
+  .cal-cell.closed{background:rgba(122,59,42,.32);color:#e9b4a0;}
+  .cal-cell.closed::after{content:"休";font-size:.56rem;color:#e9907a;margin-top:1px;}
+  .cal-cell.today{outline:2px solid var(--ember);outline-offset:-2px;font-weight:700;}
+  .cal-cell.open-mark::after{content:"";width:5px;height:5px;border-radius:50%;background:var(--soba);margin-top:3px;}
+
+  /* --- recruit --- */
+  #recruit{
+    background:
+      radial-gradient(ellipse 60% 80% at 80% 0%, rgba(223,90,28,.28), transparent 60%),
+      linear-gradient(180deg,var(--sumi),#160f0b);
+  }
+  .rec-top{text-align:center;max-width:620px;margin:0 auto 50px;}
+  .rec-top .sec-title{font-size:clamp(2.1rem,6vw,3.6rem);}
+  .rec-top p{color:var(--kinari-dim);margin-top:10px;}
+  .rec-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:46px;}
+  .perk{
+    background:var(--sumi-2);border:1px solid rgba(242,231,212,.08);
+    border-radius:3px;padding:24px 20px;transition:.3s;
+  }
+  .perk:hover{border-color:rgba(223,90,28,.5);transform:translateY(-4px);}
+  .perk .icn{font-size:1.6rem;margin-bottom:10px;}
+  .perk h4{font-family:'Shippori Mincho',serif;font-size:1.1rem;font-weight:700;margin-bottom:6px;}
+  .perk p{font-size:.83rem;color:var(--kinari-dim);line-height:1.7;}
+  .perk h4 .hl{color:var(--ember-lt);}
+  .rec-cta{
+    background:var(--sumi-2);border:1px solid rgba(242,231,212,.1);
+    border-radius:4px;padding:clamp(28px,4vw,48px);
+    display:grid;grid-template-columns:1.3fr .7fr;gap:clamp(24px,4vw,48px);align-items:center;
+  }
+  .rec-cta h3{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800;line-height:1.4;margin-bottom:12px;}
+  .rec-cta h3 .em{color:var(--ember-lt);}
+  .rec-cta p{color:var(--kinari-dim);font-size:.92rem;margin-bottom:24px;}
+  .step{display:flex;gap:12px;margin-bottom:10px;align-items:flex-start;}
+  .step .no{
+    flex:none;width:24px;height:24px;border-radius:50%;background:var(--ember);
+    color:#fff;font-weight:700;font-size:.78rem;display:flex;align-items:center;justify-content:center;
+  }
+  .step .tx{font-size:.9rem;color:var(--kinari);}
+  .step .tx b{color:var(--kinari);}
+  .line-btn{
+    margin-top:24px;background:var(--line);color:#fff;font-weight:700;
+    padding:16px 26px;border-radius:3px;font-size:1rem;letter-spacing:.06em;
+    display:inline-flex;align-items:center;gap:10px;transition:transform .2s,filter .2s;
+    box-shadow:0 12px 30px -10px rgba(6,199,85,.6);
+  }
+  .line-btn:hover{transform:translateY(-2px);filter:brightness(1.07);}
+  .qr-card{
+    background:var(--kinari);border-radius:3px;padding:22px;text-align:center;color:var(--sumi);
+  }
+  .qr-card .qr{
+    width:100%;aspect-ratio:1;border-radius:2px;margin-bottom:12px;
+    background:
+      repeating-linear-gradient(90deg,#1b1512 0 8%,transparent 8% 16%),
+      repeating-linear-gradient(0deg,#1b1512 0 8%,transparent 8% 16%);
+    background-color:#fff;
     display:flex;align-items:center;justify-content:center;
-    background:var(--cream);font-size:14px;
-    border-radius:2px;
+    position:relative;
   }
-  .cal-day.empty{background:transparent}
-  .cal-day.closed{background:var(--red);color:#fff;font-weight:700;position:relative}
-  .cal-day.closed::after{content:"休";position:absolute;font-size:8px;bottom:2px;right:4px}
-  .cal-day.today{outline:2px solid var(--gold);font-weight:700}
-  .cal-legend{display:flex;gap:20px;justify-content:center;margin-top:18px;font-size:11px;color:var(--mute)}
-  .cal-legend .dot{display:inline-block;width:10px;height:10px;background:var(--red);margin-right:6px;vertical-align:middle}
-  .cal-legend .dot.tod{background:transparent;border:2px solid var(--gold)}
-  .cal-hours{
-    margin-top:24px;padding-top:20px;border-top:1px solid var(--line);
-    text-align:center;font-size:13px;color:var(--soba);line-height:2;
+  .qr-card .qr::after{
+    content:"QR";position:absolute;font-family:'Shippori Mincho',serif;
+    font-weight:800;font-size:1.3rem;color:#1b1512;
+    background:#fff;padding:6px 12px;
   }
-  .cal-hours strong{color:var(--burgundy);font-family:"Noto Serif JP",serif}
+  .qr-card .cap{font-size:.78rem;font-weight:700;letter-spacing:.04em;}
+  .qr-card .cap2{font-size:.7rem;color:#6b5d4a;margin-top:3px;}
 
-  /* RECRUIT */
-  .recruit{padding:72px 0;background:var(--ink);color:var(--cream)}
-  .recruit .label{font-size:11px;color:var(--gold);letter-spacing:0.4em;margin-bottom:18px;text-align:center}
-  .recruit h2{font-family:"Noto Serif JP",serif;font-size:clamp(24px,4vw,32px);text-align:center;margin-bottom:16px}
-  .recruit .lead{text-align:center;max-width:580px;margin:0 auto 48px;opacity:0.85;font-size:14px}
-  .jobs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
-  .job{
-    background:rgba(248,244,236,0.05);
-    border:1px solid rgba(184,137,58,0.3);
-    padding:24px;
+  /* --- footer --- */
+  footer{background:#140f0b;border-top:1px solid rgba(242,231,212,.07);}
+  .foot-wrap{max-width:1180px;margin:0 auto;padding:60px clamp(20px,5vw,40px) 30px;}
+  .foot-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:34px;margin-bottom:44px;}
+  .foot-brand .logo{margin-bottom:14px;}
+  .foot-brand p{font-size:.82rem;color:var(--kinari-dim);line-height:1.9;}
+  .foot-col h5{font-family:'Shippori Mincho',serif;font-size:.95rem;font-weight:700;margin-bottom:14px;color:var(--ember-lt);}
+  .foot-col p{font-size:.82rem;color:var(--kinari-dim);margin-bottom:7px;line-height:1.7;}
+  .foot-col p b{color:var(--kinari);font-weight:500;}
+  .foot-bottom{
+    border-top:1px solid rgba(242,231,212,.07);padding-top:22px;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+    font-size:.72rem;color:var(--kinari-dim);letter-spacing:.04em;
   }
-  .job .role{font-family:"Noto Serif JP",serif;font-size:18px;color:var(--gold);margin-bottom:8px}
-  .job .type{font-size:10px;color:var(--cream);letter-spacing:0.25em;opacity:0.7;margin-bottom:14px}
-  .job dl{display:grid;grid-template-columns:80px 1fr;row-gap:8px;font-size:13px}
-  .job dt{color:var(--gold);opacity:0.8;font-size:11px;letter-spacing:0.15em}
-  .job dd{color:var(--cream);opacity:0.9}
-  .recruit-cta{text-align:center;margin-top:40px}
-  .recruit-cta a{
-    display:inline-block;padding:16px 40px;
-    background:var(--gold);color:var(--ink);
-    text-decoration:none;font-size:13px;letter-spacing:0.25em;font-weight:700;
-    transition:0.2s;
+  .foot-bottom .credit{color:#6b5d4a;}
+  .foot-bottom .credit b{color:var(--ember-lt);}
+
+  /* --- responsive --- */
+  @media(max-width:880px){
+    .navlinks{
+      position:fixed;inset:0 0 0 auto;width:min(78vw,300px);
+      background:rgba(22,17,14,.98);backdrop-filter:blur(12px);
+      flex-direction:column;justify-content:center;gap:26px;
+      transform:translateX(100%);transition:transform .4s cubic-bezier(.2,.7,.2,1);
+      border-left:1px solid rgba(242,231,212,.1);
+    }
+    .navlinks.open{transform:translateX(0);}
+    .navlinks a.link{font-size:1.05rem;}
+    .burger{display:flex;z-index:1001;}
+    .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .burger.open span:nth-child(2){opacity:0;}
+    .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    .story-grid{grid-template-columns:1fr;}
+    .story-photo{aspect-ratio:16/12;order:-1;}
+    .menu-grid{grid-template-columns:repeat(2,1fr);}
+    .shop-panel.active{grid-template-columns:1fr;}
+    .cal-block{grid-template-columns:1fr;}
+    .rec-grid{grid-template-columns:repeat(2,1fr);}
+    .rec-cta{grid-template-columns:1fr;}
+    .qr-card{max-width:280px;margin:0 auto;}
+    .foot-grid{grid-template-columns:1fr 1fr;}
   }
-  .recruit-cta a:hover{background:var(--cream)}
-  .recruit-cta .sub{display:block;margin-top:12px;font-size:11px;color:var(--cream);opacity:0.6;letter-spacing:0.15em}
-
-  /* CONTACT */
-  .contact{padding:72px 0;text-align:center}
-  .contact .label{font-size:11px;color:var(--burgundy);letter-spacing:0.4em;margin-bottom:18px}
-  .contact h2{font-family:"Noto Serif JP",serif;font-size:clamp(24px,4vw,32px);margin-bottom:24px}
-  .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:40px}
-  .contact-card{background:#fff;padding:32px 20px}
-  .contact-card .ttl{font-family:"Noto Serif JP",serif;font-size:16px;color:var(--burgundy);margin-bottom:6px}
-  .contact-card .tel{font-family:"Noto Serif JP",serif;font-size:22px;font-weight:700;color:var(--ink);margin:8px 0}
-  .contact-card .hint{font-size:11px;color:var(--mute);letter-spacing:0.15em}
-
-  /* FOOTER */
-  footer{background:var(--burgundy-d);color:var(--cream);padding:48px 0 24px;text-align:center}
-  footer .logo{color:var(--cream)}
-  footer .logo .sub{color:var(--gold)}
-  footer .copy{margin-top:20px;font-size:11px;opacity:0.6;letter-spacing:0.2em}
-
-  /* MOCK BANNER */
-  .mock-banner{
-    background:#FFF3CD;color:#856404;
-    text-align:center;padding:10px;font-size:11px;letter-spacing:0.1em;
-    border-bottom:1px solid #FFEEBA;
+  @media(max-width:480px){
+    .menu-grid{grid-template-columns:1fr;}
+    .rec-grid{grid-template-columns:1fr;}
+    .foot-grid{grid-template-columns:1fr;}
+    .hero-btns{flex-direction:column;width:100%;}
+    .hero-btns .btn{justify-content:center;}
   }
 </style>
 </head>
 <body>
 
-<div class="mock-banner">⚠ デモ・モックアップページ — 内容は仮置きです（高橋秀夫 / AIの町医者）</div>
-
-<!-- TOPNAV -->
-<nav class="topnav">
-  <div class="wrap">
-    <div class="logo">
-      食道楽 ひさご
-      <span class="sub">SHOKUDORAKU HISAGO</span>
-    </div>
-    <div class="navlinks">
-      <a href="#concept">こだわり</a>
-      <a href="#stores">店舗</a>
-      <a href="#menu">メニュー</a>
-      <a href="#calendar">営業日</a>
-      <a href="#recruit">採用</a>
-    </div>
+<!-- ===== NAV ===== -->
+<nav id="nav">
+  <a href="#top" class="logo">
+    <svg class="gourd" viewBox="0 0 100 100" aria-hidden="true">
+      <path d="M50 4c-7 0-12 6-12 13 0 4 1 7 3 10-8 5-14 14-14 26 0 20 11 34 23 34s23-14 23-34c0-12-6-21-14-26 2-3 3-6 3-10 0-7-5-13-12-13zm0 8c2 0 4 2 4 5s-2 5-4 5-4-2-4-5 2-5 4-5z"/>
+    </svg>
+    <b>食道楽 <span>ひさご</span></b>
+  </a>
+  <div class="navlinks" id="navlinks">
+    <a href="#story" class="link">物語</a>
+    <a href="#menu" class="link">お品書き</a>
+    <a href="#shops" class="link">店舗・カレンダー</a>
+    <a href="#recruit" class="link">採用情報</a>
+    <a href="#recruit" class="nav-cta">スタッフ募集中</a>
   </div>
+  <div class="burger" id="burger"><span></span><span></span><span></span></div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="wrap">
-    <div class="stamp">FUKUSHIMA &nbsp;·&nbsp; SINCE 創業以来</div>
-    <h1>
-      本格 <span class="accent">和牛</span> と<br>
-      手打ち <span class="accent">蕎麦</span>。
-    </h1>
-    <p class="lead">
-      米沢牛・山形牛を熟練の目で見極め、蕎麦は店内で打つ。
-      福島県内3店舗で、ご家族のお祝いから接待まで、
-      静かに、確かに、お迎えしています。
-    </p>
-    <div class="stores-mini">
-      <span>石川 本店</span>
-      <span>須賀川 店</span>
-      <span>白河 店</span>
-    </div>
+<!-- ===== HERO ===== -->
+<header class="hero" id="top">
+  <div class="hero-bg"></div>
+  <p class="since">FUKUSHIMA ・ 石川 / 白河 / 須賀川</p>
+  <h1>
+    <span class="row"><span>焼肉<i class="x">×</i>そば</span></span>
+    <span class="row"><span>食道楽ひさご</span></span>
+  </h1>
+  <p class="lead">日本に、ここだけ。</p>
+  <p class="sub">炭火の香りと、打ちたての蕎麦。福島の家族がつないできた味を、3つの店で。</p>
+  <div class="hero-btns">
+    <a href="#shops" class="btn btn-fill">3店舗を見る ＆ 営業カレンダー</a>
+    <a href="#recruit" class="btn btn-ghost">スタッフ募集を見る</a>
   </div>
-</section>
+  <div class="scrollcue">SCROLL</div>
+</header>
 
-<!-- CONCEPT -->
-<section class="concept" id="concept">
+<!-- ===== STORY ===== -->
+<section id="story">
   <div class="wrap">
-    <div class="label">CONCEPT</div>
-    <h2>素材と仕事に、<br>正直であること。</h2>
-    <p>
-      私たちが扱うのは、米沢牛、山形牛、そして毎朝打つ手打ち蕎麦。
-      牛は産地ではなく、その個体を見て選びます。
-      蕎麦は機械を使わず、店主の手でその日の分を打ち上げます。
-    </p>
-    <p>
-      ご家族でも、ご接待でも、お一人でも。<br>
-      どんな席でも「これがひさごの味」をお伝えできるよう、
-      3店舗が同じ気持ちで仕事をしています。
-    </p>
-
-    <div class="features">
-      <div class="feature">
-        <div class="ic">●</div>
-        <h3>米沢牛・山形牛</h3>
-        <p>厳選した黒毛和牛を、部位ごとに最も美味しい焼き方でご提供します。</p>
+    <div class="story-grid">
+      <div class="story-copy reveal">
+        <span class="eyebrow">OUR STORY</span>
+        <h2 class="sec-title">蕎麦から、<span class="em">焼肉</span>へ。<br>受け継ぐ、家族の味。</h2>
+        <p class="pull">「蕎麦屋のつもりは、ほとんどない。<br>でも、蕎麦でよかった。」</p>
+        <p>はじまりは、石川の一軒の日本そば屋。やがて白河・須賀川と、<strong>三軒すべてが日本そばの店</strong>として歩んできました。平成13年、全店で焼肉を加えてから——<strong>焼肉とそばを一軒で出す店は、全国を見てもうちだけ</strong>。米沢で焼肉を学び、厨房の動線まで自分の手で図面を引き直してきました。</p>
+        <p>お客さまの「これできない？」に、翌日かたちにして応える。レイアウトも、メニューの値段表も、振り込みの管理表も、全部自分たちで組み上げてきた店です。いま、その仕事を<strong>次の世代へ</strong>渡しています。</p>
+        <div class="timeline">
+          <div class="tl-item"><div class="yr">発祥</div><div class="ev">石川にて、日本そば屋として誕生</div></div>
+          <div class="tl-item"><div class="yr">のちに</div><div class="ev">「そば膳処さかもと」が白河店に。須賀川にも新店</div></div>
+          <div class="tl-item"><div class="yr">平成13年</div><div class="ev">全3店で、日本そば×焼肉を開始</div></div>
+          <div class="tl-item"><div class="yr">これから</div><div class="ev">次の世代へ、店を継承中</div></div>
+        </div>
       </div>
-      <div class="feature">
-        <div class="ic">●</div>
-        <h3>毎日 手打ち蕎麦</h3>
-        <p>その日の分だけを、店内で打ち上げ。お肉のあとの〆の一枚をどうぞ。</p>
-      </div>
-      <div class="feature">
-        <div class="ic">●</div>
-        <h3>個室・座敷完備</h3>
-        <p>お子様連れ、ご法要、ご接待。最大30名様までの個室を3店舗にご用意。</p>
+      <div class="story-photo reveal">
+        <div class="stamp">日本に<br>ここだけ</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- STORES -->
-<section class="stores" id="stores">
+<!-- ===== MENU ===== -->
+<section id="menu">
   <div class="wrap">
-    <div class="label">3 STORES</div>
-    <h2>店舗のご案内</h2>
-
-    <div class="tabs">
-      <button class="tab active" data-tab="ishikawa">石川 本店</button>
-      <button class="tab" data-tab="sukagawa">須賀川 店</button>
-      <button class="tab" data-tab="shirakawa">白河 店</button>
+    <div class="menu-head reveal">
+      <div>
+        <span class="eyebrow">SIGNATURE</span>
+        <h2 class="sec-title">看板の<span class="em">お品書き</span></h2>
+      </div>
+      <p>「焼肉のあとに、さらっとそば」——県内のお客さまに50年愛されてきた、ひさごの定番をご紹介します。</p>
     </div>
-
-    <!-- 石川 -->
-    <div class="store-card active" id="ishikawa">
-      <span class="badge">本店</span>
-      <div class="name">食道楽 ひさご 石川本店</div>
-      <p style="color:var(--mute);font-size:13px;margin-top:6px">創業の地。広い駐車場と、四季を映す座敷。</p>
-
-      <div class="store-info">
-        <div class="info-item">
-          <div class="k">ADDRESS</div>
-          <div class="v">〒963-7858 福島県石川郡石川町塩沢字大日向71-2</div>
-        </div>
-        <div class="info-item">
-          <div class="k">HOURS</div>
-          <div class="v">11:30〜15:00 / 17:00〜22:00<br>（LO 21:30）</div>
-        </div>
-        <div class="info-item">
-          <div class="k">CLOSED</div>
-          <div class="v">火曜日</div>
-        </div>
-        <div class="info-item">
-          <div class="k">SEATS</div>
-          <div class="v">テーブル・座敷・個室</div>
-        </div>
+    <div class="menu-grid">
+      <div class="dish reveal" style="background-image:url('https://lh3.googleusercontent.com/place-photos/AJRVUZOvXlo9ktm2sfUKJBqoRZ59KjApz3H-MG9FcYS3GGAYhSJTVrZUCetX5WK0pa2rKc_GWFo2UU1Q-DfvjpYD_n4YX0QZC66ClW6KaQlGSDO4aNEwhQ6MFAqfU_UO107aEiUBCB8SUUBv_tVj1Q=s4800-w800-h600')">
+        <span class="tag">名物</span>
+        <div class="info"><div class="ja">ダブルカルビ</div><div class="desc">厚切り・やわらか。塩でもタレでも</div></div>
       </div>
-      <div class="store-cta">
-        <a class="btn btn-primary" href="#contact">ご予約・お問い合わせ</a>
-        <a class="btn btn-outline" href="https://maps.google.com/?q=食道楽ひさご石川本店" target="_blank">Google マップで見る</a>
+      <div class="dish reveal" style="background-image:url('https://lh3.googleusercontent.com/place-photos/AJRVUZNa4dmpb_Un9bgw-ftrvTYFEoyyMRrB-bNHa_oqmLytnozP7-cXdggwfQobhqRdZFs9p6ELdMrpgmOHadR2HMb99VydBl84B9RdWfAgmmQoBfgK6vuISyRLNwtzp7a4rkGOIximvuyjnE1lxw=s4800-w800-h600')">
+        <span class="tag">ひさご流</span>
+        <div class="info"><div class="ja">石焼ビビンバ</div><div class="desc">熱々の石鍋で、最後までアツアツ</div></div>
       </div>
+      <div class="dish reveal" style="background-image:url('https://lh3.googleusercontent.com/place-photos/AJRVUZOnYSYlM7Vu2cd6KA7jLsp-vlZHUJgemRcbqoDLyvetqo5AlVR5c2x9Vs41a3BhoXRkdLpTe7XRaGO5HnbeaSFPoG-2hrdTrmZqEwWxVq0eBYiB5vzJThJafOp_5tfUzfqAVipxUvrPn_Lvng=s4800-w800-h600')">
+        <span class="tag">セット</span>
+        <div class="info"><div class="ja">ミニ天丼セット</div><div class="desc">海老天・穴子天と、もりそば</div></div>
+      </div>
+      <div class="dish reveal" style="background-image:url('https://lh3.googleusercontent.com/place-photos/AJRVUZMD6TdC9XRU6regp2rLBRLSalJblyvvrr8STT_zw1YHoxFuZfZ8cJ-GGhb9YdjM-uCNqrxFmjWIhZepaDotVqEC-Q0dk5TqruHiC0JLPBsBL_AffX7OGAelgxeamKU7V-g_2tmgn0SoiDgt78goFUcmLw=s4800-w800-h600')">
+        <span class="tag">〆の一杯</span>
+        <div class="info"><div class="ja">カルビ／カレーラーメン</div><div class="desc">焼肉屋がつくる、クセになる一杯</div></div>
+      </div>
+    </div>
+    <p class="menu-note">※ メニュー・価格はイメージです。実際のお品書きに合わせて差し替えできます。</p>
+  </div>
+</section>
+
+<!-- ===== SHOPS ===== -->
+<section id="shops">
+  <div class="wrap">
+    <span class="eyebrow reveal">3 STORES</span>
+    <h2 class="sec-title reveal">石川・白河・須賀川、<span class="em">3つの店</span></h2>
+    <p class="reveal" style="color:var(--kinari-dim);max-width:560px;margin-bottom:34px;">行きたい店をえらんで、住所・電話・営業時間をその場で確認。下の<strong style="color:var(--kinari)">営業カレンダー</strong>で、定休日・連休もひと目で。</p>
+
+    <div class="tabs reveal">
+      <button class="tab active" data-shop="2">石川店</button>
+      <button class="tab" data-shop="1">白河店</button>
+      <button class="tab" data-shop="0">須賀川店</button>
     </div>
 
     <!-- 須賀川 -->
-    <div class="store-card" id="sukagawa">
-      <span class="badge">SUKAGAWA</span>
-      <div class="name">食道楽 ひさご 須賀川店</div>
-      <p style="color:var(--mute);font-size:13px;margin-top:6px">須賀川駅近く、お子様歓迎。家族の節目を、いつでも。</p>
-
-      <div class="store-info">
-        <div class="info-item">
-          <div class="k">ADDRESS</div>
-          <div class="v">〒962-0028 福島県須賀川市茶畑町5</div>
-        </div>
-        <div class="info-item">
-          <div class="k">TEL</div>
-          <div class="v tel">0248-73-0722</div>
-        </div>
-        <div class="info-item">
-          <div class="k">HOURS</div>
-          <div class="v">11:30〜15:00 / 17:00〜22:00<br>（LO 21:30）</div>
-        </div>
-        <div class="info-item">
-          <div class="k">CLOSED</div>
-          <div class="v">火曜日</div>
-        </div>
-        <div class="info-item">
-          <div class="k">SEATS</div>
-          <div class="v">60席（個室20〜30人）</div>
-        </div>
-        <div class="info-item">
-          <div class="k">PARKING</div>
-          <div class="v">20台</div>
-        </div>
+    <div class="shop-panel" data-panel="0">
+      <div class="shop-photo" style="background-image:url('https://lh3.googleusercontent.com/place-photos/AJRVUZM7h4wy5QBkzYkH1Ca11xPhN3x1K8YxG1SbTcxJlVRmKetzDd76QEMoSXRvv8zQtVCCHx_bB3g_yF07jjOm-oGEsTnP5EJHlVGvaRR-HP1N3umLMk0hAeeqPuYFJmWBUU1L_6jdKo_HQgIo_-KwfSeozA=s4800-w800-h600')">
+        <div class="rate">食べた人の声 <b>★3.6</b> ／ 245件</div>
       </div>
-      <div class="store-cta">
-        <a class="btn btn-primary" href="tel:0248730722">電話で予約 (0248-73-0722)</a>
-        <a class="btn btn-outline" href="https://maps.google.com/?q=食道楽ひさご須賀川店" target="_blank">Google マップで見る</a>
+      <div class="shop-info">
+        <h3>食道楽ひさご 須賀川店</h3>
+        <div class="kana">SUKAGAWA — 新店舗</div>
+        <div class="info-row"><div class="lbl">住所</div><div class="val">福島県須賀川市茶畑町5<br><span class="dim">郊外・駐車場あり</span></div></div>
+        <div class="info-row"><div class="lbl">電話</div><div class="val">0248-73-0722</div></div>
+        <div class="info-row"><div class="lbl">営業</div><div class="val">ランチ 11:30–15:00<br>ディナー 17:00–22:00</div></div>
+        <div class="info-row"><div class="lbl">定休日</div><div class="val">火曜日 <span class="dim">＋連休あり（カレンダー参照）</span></div></div>
+        <div class="info-row"><div class="lbl">お支払</div><div class="val">現金・各種クレジット・PayPay・電子マネー・須賀川ガス券</div></div>
+        <div class="shop-actions">
+          <a href="https://maps.google.com/?cid=9536556367438449732" target="_blank" rel="noopener" class="mini-btn map">📍 地図を開く</a>
+          <a href="tel:0248730722" class="mini-btn tel">電話する</a>
+        </div>
       </div>
     </div>
 
     <!-- 白河 -->
-    <div class="store-card" id="shirakawa">
-      <span class="badge">SHIRAKAWA</span>
-      <div class="name">食道楽 ひさご 白河店</div>
-      <p style="color:var(--mute);font-size:13px;margin-top:6px">新白河駅エリア。出張・観光のお客様にも便利な立地。</p>
-
-      <div class="store-info">
-        <div class="info-item">
-          <div class="k">ADDRESS</div>
-          <div class="v">〒961-0954 福島県白河市老久保49-15</div>
-        </div>
-        <div class="info-item">
-          <div class="k">HOURS</div>
-          <div class="v">11:30〜15:00 / 17:00〜22:00<br>（LO 21:30）</div>
-        </div>
-        <div class="info-item">
-          <div class="k">CLOSED</div>
-          <div class="v">火曜日</div>
-        </div>
-        <div class="info-item">
-          <div class="k">SEATS</div>
-          <div class="v">テーブル・座敷・個室</div>
+    <div class="shop-panel" data-panel="1">
+      <div class="shop-photo" style="background-image:url('https://lh3.googleusercontent.com/place-photos/AJRVUZOxPwLXjheAiHVoKc4phcrmNJdU6TCbszH09X4OfsCLO9L81mxMtffDvXpeE_ydHopC5lPmgQk17ZSfi72NPJhuELKgZHM5MLiSjrM6ipgJKNx8NARbjbxQsPXU2GFQw4t62MvsnPsUDxaALw=s4800-w800-h600')">
+        <div class="rate">食べた人の声 <b>★3.9</b> ／ 261件</div>
+      </div>
+      <div class="shop-info">
+        <h3>食道楽ひさご 白河店</h3>
+        <div class="kana">SHIRAKAWA</div>
+        <div class="info-row"><div class="lbl">住所</div><div class="val">福島県白河市追廻49-15<br><span class="dim">前身は「そば膳処さかもと」</span></div></div>
+        <div class="info-row"><div class="lbl">電話</div><div class="val">0248-24-7190</div></div>
+        <div class="info-row"><div class="lbl">営業</div><div class="val">ランチ 11:30–15:00 <span class="dim">（月曜は–13:45）</span><br>ディナー 17:00–22:00</div></div>
+        <div class="info-row"><div class="lbl">定休日</div><div class="val">火曜日 <span class="dim">＋連休あり（カレンダー参照）</span></div></div>
+        <div class="info-row"><div class="lbl">お支払</div><div class="val">現金・各種クレジット・PayPay・電子マネー</div></div>
+        <div class="shop-actions">
+          <a href="https://maps.google.com/?cid=8413984015135056559" target="_blank" rel="noopener" class="mini-btn map">📍 地図を開く</a>
+          <a href="tel:0248247190" class="mini-btn tel">電話する</a>
         </div>
       </div>
-      <div class="store-cta">
-        <a class="btn btn-primary" href="#contact">ご予約・お問い合わせ</a>
-        <a class="btn btn-outline" href="https://maps.google.com/?q=食道楽ひさご白河店" target="_blank">Google マップで見る</a>
+    </div>
+
+    <!-- 石川 -->
+    <div class="shop-panel active" data-panel="2">
+      <div class="shop-photo" style="background-image:url('https://lh3.googleusercontent.com/place-photos/AJRVUZP_sWiVCud7mZ9iu02AghHYGmJKr0vTVs-qJnbKH4vn5dbW5kuv-bidHNT5FT1WeB3Ik5e09zFZwIwgeiDVfgzeMF7J9pOT_87PL-R75e9X-_FhilAXaRVn3Mkl49aoYJozmIzkScivUU7UZJA=s4800-w800-h600')">
+        <div class="rate">食べた人の声 <b>★3.8</b> ／ 217件</div>
+      </div>
+      <div class="shop-info">
+        <h3>食道楽ひさご 石川店</h3>
+        <div class="kana">ISHIKAWA — 発祥の店</div>
+        <div class="info-row"><div class="lbl">住所</div><div class="val">福島県石川郡石川町塩沢大日向72</div></div>
+        <div class="info-row"><div class="lbl">電話</div><div class="val">0247-26-5305</div></div>
+        <div class="info-row"><div class="lbl">営業</div><div class="val">通し営業 11:00–22:00<br><span class="dim">タッチパネル注文・提供スピードに定評</span></div></div>
+        <div class="info-row"><div class="lbl">定休日</div><div class="val">火曜日 <span class="dim">＋連休あり（カレンダー参照）</span></div></div>
+        <div class="info-row"><div class="lbl">お支払</div><div class="val">現金・各種クレジット・PayPay・電子マネー</div></div>
+        <div class="shop-actions">
+          <a href="https://maps.google.com/?cid=8910761917020350760" target="_blank" rel="noopener" class="mini-btn map">📍 地図を開く</a>
+          <a href="tel:0247265305" class="mini-btn tel">電話する</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- calendar -->
+    <div class="cal-block reveal">
+      <div class="cal-intro">
+        <span class="eyebrow">営業カレンダー</span>
+        <h3>「やってると思って行ったら休みだった」を、なくす。</h3>
+        <p>火曜定休にくわえ、連休・臨時休業・年末年始も、このカレンダーで店側がその場で更新。3店舗ぶん、ここを見れば確実です。</p>
+        <p style="color:var(--kinari);font-size:.86rem;">※ お客さまの口コミにも「定休日が分かりにくい」の声。ここで解決します。</p>
+        <div class="cal-legend">
+          <span><i class="dot open"></i>営業日</span>
+          <span><i class="dot close"></i>定休・休業</span>
+        </div>
+      </div>
+      <div class="calendar">
+        <div class="cal-top">
+          <button id="calPrev" aria-label="前の月">‹</button>
+          <div class="cal-title" id="calTitle">2026年 5月</div>
+          <button id="calNext" aria-label="次の月">›</button>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- MENU -->
-<section class="menu" id="menu">
+<!-- ===== RECRUIT ===== -->
+<section id="recruit">
   <div class="wrap">
-    <div class="label">SIGNATURE</div>
-    <h2>看板メニュー</h2>
+    <div class="rec-top reveal">
+      <span class="eyebrow" style="justify-content:center;">RECRUIT ・ スタッフ募集</span>
+      <h2 class="sec-title">ひさごで、<span class="em">働く</span>。</h2>
+      <p>1日だけでも、週1だけでも。高校生も、はじめての人も歓迎。<br>3店舗どこでも、あなたのペースで。</p>
+    </div>
 
-    <div class="menu-grid">
-      <div class="menu-item">
-        <span class="badge">No.01</span>
-        <h3>幻の米沢牛 特上カルビ</h3>
-        <p>サシの入り方が綺麗な部位を一枚ずつ。塩でまず一切れ。</p>
+    <div class="rec-grid">
+      <div class="perk reveal">
+        <div class="icn">🍚</div>
+        <h4>自慢の<span class="hl">まかない</span></h4>
+        <p>カルビの切り落とし、いい肉だけ。焼肉どんぶり・ビビンバ・そばまで。280円補助で、ほぼ無料。</p>
       </div>
-      <div class="menu-item">
-        <span class="badge">No.02</span>
-        <h3>せせり焼肉</h3>
-        <p>仕入れ次第。希少な部位を、こだわりの炙りで。</p>
+      <div class="perk reveal">
+        <div class="icn">⏱️</div>
+        <h4>時給 <span class="hl">1,050円〜</span></h4>
+        <p>8時間超は2割増、深夜も割増、しっかり労基ベース。有給も全員つけています。</p>
       </div>
-      <div class="menu-item">
-        <span class="badge">No.03</span>
-        <h3>和牛タン・ネギタン</h3>
-        <p>厚切り。レモン、塩、ねぎダレ。三段の楽しみ方を。</p>
+      <div class="perk reveal">
+        <div class="icn">📅</div>
+        <h4><span class="hl">1日・週1</span>からOK</h4>
+        <p>「来たいときだけ」で大丈夫。テスト前や行事のときは、ゆっくり休んでください。</p>
       </div>
-      <div class="menu-item">
-        <span class="badge">No.04</span>
-        <h3>手打ち ざる蕎麦</h3>
-        <p>〆に、または蕎麦単品で。その日の分のみご用意。</p>
+      <div class="perk reveal">
+        <div class="icn">🏪</div>
+        <h4><span class="hl">3店舗</span>から選べる</h4>
+        <p>須賀川・白河・石川。家から近い店で。友達と一緒の応募も大歓迎です。</p>
       </div>
-      <div class="menu-item">
-        <span class="badge">No.05</span>
-        <h3>ファミリーセット（5名様）</h3>
-        <p>家族の節目に。お子様も楽しめる組み合わせ。</p>
+    </div>
+
+    <div class="rec-cta reveal">
+      <div>
+        <h3>応募は、<span class="em">スマホで3タップ</span>。<br>履歴書も、来店も、まず要りません。</h3>
+        <p>LINEで友だち登録 → かんたん入力。あとは面接の日をえらぶだけ。採用後の勤怠も、シフト希望も、ぜんぶスマホで完結します。</p>
+        <div class="step"><div class="no">1</div><div class="tx"><b>LINEで「ひさご採用」を友だち追加</b></div></div>
+        <div class="step"><div class="no">2</div><div class="tx"><b>名前・希望の店舗・入れる曜日を入力</b></div></div>
+        <div class="step"><div class="no">3</div><div class="tx"><b>面接の希望日をタップして送信</b></div></div>
+        <a href="#" class="line-btn" id="lineBtn">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M12 2C6.5 2 2 5.7 2 10.2c0 4 3.6 7.4 8.5 8 .3.1.8.2.9.5.1.3.1.7 0 1l-.1.9c0 .3-.2 1 .9.6 1.1-.5 6-3.5 8.2-6C21.4 13.9 22 12.1 22 10.2 22 5.7 17.5 2 12 2z"/></svg>
+          LINEで応募する（友だち登録）
+        </a>
       </div>
-      <div class="menu-item">
-        <span class="badge">No.06</span>
-        <h3>生チョコアイス</h3>
-        <p>食後の一品。ご好評につき定番化しました。</p>
+      <div class="qr-card">
+        <div class="qr"></div>
+        <div class="cap">スマホでQRを読み取り</div>
+        <div class="cap2">店頭ポスター・チラシにも掲載できます</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CALENDAR -->
-<section class="calendar" id="calendar">
-  <div class="wrap">
-    <div class="label">CALENDAR</div>
-    <h2>営業カレンダー</h2>
-
-    <div class="cal-wrap">
-      <div class="cal-head">
-        <button onclick="changeMonth(-1)">◀</button>
-        <div class="cal-month" id="cal-month"></div>
-        <button onclick="changeMonth(1)">▶</button>
-      </div>
-      <div class="cal-grid" id="cal-grid"></div>
-      <div class="cal-legend">
-        <span><span class="dot"></span>定休日（火曜）</span>
-        <span><span class="dot tod"></span>本日</span>
-      </div>
-      <div class="cal-hours">
-        <strong>営業時間</strong><br>
-        11:30 〜 15:00 ／ 17:00 〜 22:00（LO 21:30）<br>
-        <strong>定休日</strong>　毎週 火曜日<br>
-        ※年末年始・お盆等の臨時休業は別途お知らせします
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- RECRUIT -->
-<section class="recruit" id="recruit">
-  <div class="wrap">
-    <div class="label">RECRUIT</div>
-    <h2>仲間を募集しています</h2>
-    <p class="lead">
-      創業以来の味を、次の世代に渡していくために。<br>
-      ひさご3店舗で、一緒に働いてくださる方を募集しています。<br>
-      未経験の方も丁寧にお教えします。
-    </p>
-
-    <div class="jobs">
-      <div class="job">
-        <div class="role">ホールスタッフ</div>
-        <div class="type">PART · FULL TIME</div>
-        <dl>
-          <dt>勤務地</dt><dd>石川／須賀川／白河（応相談）</dd>
-          <dt>時給</dt><dd>1,050円〜（経験により優遇）</dd>
-          <dt>時間</dt><dd>週2日〜・1日3h〜OK</dd>
-          <dt>歓迎</dt><dd>主婦（夫）・学生・Wワーク</dd>
-        </dl>
-      </div>
-      <div class="job">
-        <div class="role">キッチンスタッフ</div>
-        <div class="type">PART · FULL TIME</div>
-        <dl>
-          <dt>勤務地</dt><dd>石川／須賀川／白河（応相談）</dd>
-          <dt>時給</dt><dd>1,100円〜（経験により優遇）</dd>
-          <dt>時間</dt><dd>週3日〜・1日4h〜OK</dd>
-          <dt>歓迎</dt><dd>飲食経験者・調理を学びたい方</dd>
-        </dl>
-      </div>
-      <div class="job">
-        <div class="role">店長候補（社員）</div>
-        <div class="type">FULL TIME</div>
-        <dl>
-          <dt>勤務地</dt><dd>3店舗いずれか</dd>
-          <dt>月給</dt><dd>250,000円〜（経験考慮）</dd>
-          <dt>賞与</dt><dd>年2回・各種手当あり</dd>
-          <dt>歓迎</dt><dd>飲食店経験者・チーム運営の興味ある方</dd>
-        </dl>
-      </div>
-    </div>
-
-    <div class="recruit-cta">
-      <a href="#contact">エントリー・ご相談はこちら</a>
-      <span class="sub">LINE・電話・お問い合わせフォームよりお気軽にどうぞ</span>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section class="contact" id="contact">
-  <div class="wrap">
-    <div class="label">CONTACT</div>
-    <h2>ご予約・お問い合わせ</h2>
-    <p style="max-width:560px;margin:0 auto;color:var(--soba)">
-      ご宴会、お祝い、ご法要、ご接待など、<br>
-      お席のご相談はお電話でお気軽にどうぞ。
-    </p>
-
-    <div class="contact-grid">
-      <div class="contact-card">
-        <div class="ttl">石川 本店</div>
-        <div class="tel">— 仮 —</div>
-        <div class="hint">SHOKUDORAKU HISAGO ISHIKAWA</div>
-      </div>
-      <div class="contact-card">
-        <div class="ttl">須賀川 店</div>
-        <div class="tel">0248-73-0722</div>
-        <div class="hint">SHOKUDORAKU HISAGO SUKAGAWA</div>
-      </div>
-      <div class="contact-card">
-        <div class="ttl">白河 店</div>
-        <div class="tel">— 仮 —</div>
-        <div class="hint">SHOKUDORAKU HISAGO SHIRAKAWA</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
+<!-- ===== FOOTER ===== -->
 <footer>
-  <div class="wrap">
-    <div class="logo">
-      食道楽 ひさご
-      <span class="sub">SHOKUDORAKU HISAGO</span>
+  <div class="foot-wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="#top" class="logo">
+          <svg class="gourd" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 4c-7 0-12 6-12 13 0 4 1 7 3 10-8 5-14 14-14 26 0 20 11 34 23 34s23-14 23-34c0-12-6-21-14-26 2-3 3-6 3-10 0-7-5-13-12-13zm0 8c2 0 4 2 4 5s-2 5-4 5-4-2-4-5 2-5 4-5z"/></svg>
+          <b>食道楽 <span>ひさご</span></b>
+        </a>
+        <p>焼肉×そば。福島・石川を発祥に、<br>家族の手でつないできた、3店舗の味。</p>
+      </div>
+      <div class="foot-col">
+        <h5>石川店 <span style="font-size:.7rem;color:var(--kinari-dim);font-weight:400;">発祥</span></h5>
+        <p><b>石川郡石川町塩沢大日向72</b></p>
+        <p>0247-26-5305</p>
+        <p>11:00–22:00（通し営業）</p>
+      </div>
+      <div class="foot-col">
+        <h5>白河店</h5>
+        <p><b>白河市追廻49-15</b></p>
+        <p>0248-24-7190</p>
+        <p>11:30–15:00／17:00–22:00</p>
+      </div>
+      <div class="foot-col">
+        <h5>須賀川店</h5>
+        <p><b>須賀川市茶畑町5</b></p>
+        <p>0248-73-0722</p>
+        <p>11:30–15:00／17:00–22:00</p>
+      </div>
     </div>
-    <div class="copy">© 食道楽ひさご &nbsp;·&nbsp; FUKUSHIMA</div>
+    <div class="foot-bottom">
+      <div>© 2026 食道楽ひさご　／　火曜定休（連休はカレンダー参照）</div>
+      <div class="credit">提案デモ ／ Web・業務システム設計：<b>AIの町医者</b></div>
+    </div>
   </div>
 </footer>
 
 <script>
-  // TABS
-  const tabs = document.querySelectorAll('.tab');
-  const cards = document.querySelectorAll('.store-card');
-  tabs.forEach(t => t.addEventListener('click', () => {
-    tabs.forEach(x => x.classList.remove('active'));
-    cards.forEach(x => x.classList.remove('active'));
-    t.classList.add('active');
-    document.getElementById(t.dataset.tab).classList.add('active');
+  /* nav scroll state */
+  const nav=document.getElementById('nav');
+  addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40));
+
+  /* mobile menu */
+  const burger=document.getElementById('burger'),
+        navlinks=document.getElementById('navlinks');
+  burger.addEventListener('click',()=>{
+    burger.classList.toggle('open');
+    navlinks.classList.toggle('open');
+  });
+  navlinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+    burger.classList.remove('open');navlinks.classList.remove('open');
   }));
 
-  // CALENDAR
-  let calYear = new Date().getFullYear();
-  let calMonth = new Date().getMonth();
-  const today = new Date();
-  const todayKey = today.getFullYear() + '-' + today.getMonth() + '-' + today.getDate();
+  /* shop tabs */
+  const tabs=document.querySelectorAll('.tab'),
+        panels=document.querySelectorAll('.shop-panel');
+  tabs.forEach(t=>t.addEventListener('click',()=>{
+    tabs.forEach(x=>x.classList.remove('active'));
+    panels.forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.querySelector('.shop-panel[data-panel="'+t.dataset.shop+'"]').classList.add('active');
+  }));
 
+  /* reveal on scroll */
+  const io=new IntersectionObserver(es=>{
+    es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+  },{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  /* calendar */
+  let calY=2026, calM=4; // month index: 4 = May
+  const TODAY=new Date(2026,4,14);
+  const wdNames=['日','月','火','水','木','金','土'];
   function renderCal(){
-    document.getElementById('cal-month').textContent =
-      calYear + '年 ' + (calMonth+1) + '月';
-    const grid = document.getElementById('cal-grid');
-    grid.innerHTML = '';
-    ['日','月','火','水','木','金','土'].forEach(d => {
-      const c = document.createElement('div');
-      c.className = 'cal-dow';
-      c.textContent = d;
-      grid.appendChild(c);
+    const grid=document.getElementById('calGrid');
+    document.getElementById('calTitle').textContent=calY+'年 '+(calM+1)+'月';
+    grid.innerHTML='';
+    wdNames.forEach((w,i)=>{
+      const c=document.createElement('div');
+      c.className='wd'+(i===0?' sun':i===6?' sat':'');
+      c.textContent=w;grid.appendChild(c);
     });
-    const firstDay = new Date(calYear, calMonth, 1).getDay();
-    const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
-    for(let i=0;i<firstDay;i++){
-      const c = document.createElement('div');
-      c.className = 'cal-day empty';
-      grid.appendChild(c);
+    const first=new Date(calY,calM,1).getDay();
+    const days=new Date(calY,calM+1,0).getDate();
+    for(let i=0;i<first;i++){
+      const e=document.createElement('div');e.className='cal-cell empty';grid.appendChild(e);
     }
-    for(let d=1;d<=daysInMonth;d++){
-      const dt = new Date(calYear, calMonth, d);
-      const c = document.createElement('div');
-      c.className = 'cal-day';
-      if(dt.getDay() === 2) c.classList.add('closed');
-      if((calYear + '-' + calMonth + '-' + d) === todayKey) c.classList.add('today');
-      c.textContent = d;
-      grid.appendChild(c);
+    for(let d=1;d<=days;d++){
+      const cell=document.createElement('div');
+      const dow=new Date(calY,calM,d).getDay();
+      cell.className='cal-cell';
+      cell.textContent=d;
+      if(dow===2){ cell.classList.add('closed'); }      // 火曜定休
+      else { cell.classList.add('open-mark'); }
+      if(calY===TODAY.getFullYear()&&calM===TODAY.getMonth()&&d===TODAY.getDate()){
+        cell.classList.add('today');
+      }
+      grid.appendChild(cell);
     }
   }
-  function changeMonth(delta){
-    calMonth += delta;
-    if(calMonth < 0){ calMonth = 11; calYear--; }
-    if(calMonth > 11){ calMonth = 0; calYear++; }
-    renderCal();
-  }
+  document.getElementById('calPrev').addEventListener('click',()=>{
+    calM--; if(calM<0){calM=11;calY--;} renderCal();
+  });
+  document.getElementById('calNext').addEventListener('click',()=>{
+    calM++; if(calM>11){calM=0;calY++;} renderCal();
+  });
   renderCal();
-</script>
 
+  /* demo guards */
+  document.getElementById('lineBtn').addEventListener('click',e=>{
+    e.preventDefault();
+    alert('【デモ】ここに、ひさご採用LINE公式アカウントの友だち追加が入ります。\n登録 → 勤怠QR・シフト希望まで、スマホで完結する導線につながります。');
+  });
+</script>
 </body>
 </html>
