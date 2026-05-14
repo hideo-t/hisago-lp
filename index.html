@@ -99,13 +99,31 @@
   .hero-bg{
     position:absolute;inset:0;z-index:-2;
     background-color:#100c0a;
-    background-image:url("https://lh3.googleusercontent.com/place-photos/AJRVUZMx-zjulFIVOEfd1OphICrHO66PMZoiCLAAd2vJ6Uola8QCcBTTfVk5gf9Z7BA4kliUjJwvuRf4ZnJmLm8HkBKDUzQX4EzzElsI72fqASuYjiDssxA6wH7IU5Iqdp_DB9Ty_0lO0vMyRxlpCxlFGRdFUw=s4800-w800-h600");
+    overflow:hidden;
+  }
+  .hero-slide{
+    position:absolute;inset:0;
     background-size:cover;background-position:center;
     filter:brightness(.4) saturate(1.1);
+    opacity:0;
     transform:scale(1.08);
-    animation:slowzoom 24s ease-in-out infinite alternate;
+    animation:heroFade 18s infinite, slowzoom 18s ease-in-out infinite;
   }
-  @keyframes slowzoom{to{transform:scale(1.0);}}
+  .hero-slide:nth-child(1){animation-delay:0s, 0s;     background-image:url("images/hero-1.jpg");}
+  .hero-slide:nth-child(2){animation-delay:6s, 6s;     background-image:url("images/hero-2.jpg");}
+  .hero-slide:nth-child(3){animation-delay:12s, 12s;   background-image:url("images/hero-3.jpg");}
+  @keyframes heroFade{
+    0%   {opacity:0;}
+    5%   {opacity:1;}
+    33%  {opacity:1;}
+    38%  {opacity:0;}
+    100% {opacity:0;}
+  }
+  @keyframes slowzoom{
+    0%   {transform:scale(1.08);}
+    50%  {transform:scale(1.0);}
+    100% {transform:scale(1.08);}
+  }
   .hero::after{
     content:"";position:absolute;inset:0;z-index:-1;
     background:
@@ -442,7 +460,11 @@
 
 <!-- ===== HERO ===== -->
 <header class="hero" id="top">
-  <div class="hero-bg"></div>
+  <div class="hero-bg">
+    <div class="hero-slide"></div>
+    <div class="hero-slide"></div>
+    <div class="hero-slide"></div>
+  </div>
   <p class="since">FUKUSHIMA ・ 石川 / 白河 / 須賀川</p>
   <h1>
     <span class="row"><span>焼肉<i class="x">×</i>そば</span></span>
