@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>食道楽 ひさご｜本格和牛と手打ち蕎麦 — 石川本店・須賀川店・白河店</title>
+<meta name="description" content="米沢牛・山形牛と手打ち蕎麦の食道楽ひさご。福島県内3店舗（石川本店・須賀川店・白河店）。ご予約・採用情報はこちら。">
+<meta property="og:title" content="食道楽 ひさご — 本格和牛と手打ち蕎麦（福島県内3店舗）">
+<meta property="og:description" content="米沢牛・山形牛と手打ち蕎麦。石川本店・須賀川店・白河店">
+<meta property="og:type" content="restaurant.restaurant">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Restaurant",
+  "name":"食道楽 ひさご",
+  "servesCuisine":["焼肉","蕎麦","和食"],
+  "priceRange":"¥¥¥",
+  "department":[
+    {"@type":"Restaurant","name":"食道楽ひさご 石川本店","address":{"@type":"PostalAddress","addressRegion":"福島県","addressLocality":"石川郡石川町塩沢字大日向71-2","addressCountry":"JP"}},
+    {"@type":"Restaurant","name":"食道楽ひさご 須賀川店","telephone":"+81-248-73-0722","address":{"@type":"PostalAddress","addressRegion":"福島県","addressLocality":"須賀川市茶畑町5","postalCode":"962-0028","addressCountry":"JP"}},
+    {"@type":"Restaurant","name":"食道楽ひさご 白河店","address":{"@type":"PostalAddress","addressRegion":"福島県","addressLocality":"白河市老久保49-15","addressCountry":"JP"}}
+  ]
+}
+</script>
+
+<style>
+  :root{
+    --burgundy:#6B1F2E;
+    --burgundy-d:#4A1520;
+    --cream:#F8F4EC;
+    --cream-d:#EBE3D2;
+    --ink:#1A0F0A;
+    --gold:#B8893A;
+    --soba:#4A3E33;
+    --mute:#7A6F65;
+    --line:#D9CFB9;
+    --red:#C0392B;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Noto Sans JP",-apple-system,system-ui,sans-serif;
+    color:var(--ink);
+    background:var(--cream);
+    line-height:1.8;
+    font-size:15px;
+    letter-spacing:0.04em;
+  }
+  .serif{font-family:"Noto Serif JP",serif}
+  .wrap{max-width:880px;margin:0 auto;padding:0 20px}
+
+  /* TOP NAV */
+  .topnav{
+    position:sticky;top:0;z-index:100;
+    background:rgba(248,244,236,0.95);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+    padding:14px 0;
+  }
+  .topnav .wrap{display:flex;align-items:center;justify-content:space-between}
+  .logo{font-family:"Noto Serif JP",serif;font-size:18px;font-weight:700;color:var(--burgundy);letter-spacing:0.12em}
+  .logo .sub{font-size:10px;color:var(--mute);letter-spacing:0.3em;display:block;margin-top:2px}
+  .navlinks{display:flex;gap:18px;font-size:12px;letter-spacing:0.15em}
+  .navlinks a{color:var(--ink);text-decoration:none}
+  .navlinks a:hover{color:var(--burgundy)}
+  @media(max-width:600px){
+    .navlinks{display:none}
+  }
+
+  /* HERO */
+  .hero{
+    position:relative;
+    padding:80px 0 64px;
+    background:linear-gradient(135deg,var(--burgundy) 0%,var(--burgundy-d) 100%);
+    color:var(--cream);
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(184,137,58,0.15) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(184,137,58,0.1) 0%, transparent 50%);
+    pointer-events:none;
+  }
+  .hero .wrap{position:relative}
+  .hero .stamp{
+    display:inline-block;font-size:11px;letter-spacing:0.4em;
+    border:1px solid var(--gold);color:var(--gold);
+    padding:6px 14px;margin-bottom:24px;
+  }
+  .hero h1{
+    font-family:"Noto Serif JP",serif;
+    font-size:clamp(32px,6vw,52px);
+    line-height:1.3;
+    margin-bottom:20px;
+    font-weight:700;
+  }
+  .hero h1 .accent{color:var(--gold)}
+  .hero .lead{
+    font-size:clamp(15px,2vw,17px);
+    max-width:560px;
+    opacity:0.92;
+  }
+  .hero .stores-mini{
+    display:flex;gap:24px;margin-top:40px;flex-wrap:wrap;
+    font-size:13px;letter-spacing:0.15em;
+  }
+  .hero .stores-mini span{
+    border-left:2px solid var(--gold);padding-left:10px;
+  }
+
+  /* CONCEPT */
+  .concept{padding:72px 0;text-align:center}
+  .concept .label{font-size:11px;color:var(--burgundy);letter-spacing:0.4em;margin-bottom:18px}
+  .concept h2{font-family:"Noto Serif JP",serif;font-size:clamp(24px,4vw,32px);margin-bottom:24px;line-height:1.5}
+  .concept p{max-width:580px;margin:0 auto 12px;color:var(--soba)}
+
+  .features{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:24px;margin-top:48px;text-align:left;
+  }
+  .feature{
+    background:#fff;
+    border:1px solid var(--line);
+    padding:28px 24px;
+  }
+  .feature .ic{font-size:24px;color:var(--gold);margin-bottom:12px}
+  .feature h3{font-family:"Noto Serif JP",serif;font-size:18px;margin-bottom:8px;color:var(--burgundy)}
+  .feature p{font-size:13px;color:var(--soba);line-height:1.8}
+
+  /* STORES */
+  .stores{padding:72px 0;background:var(--cream-d)}
+  .stores .label{font-size:11px;color:var(--burgundy);letter-spacing:0.4em;margin-bottom:18px;text-align:center}
+  .stores h2{font-family:"Noto Serif JP",serif;font-size:clamp(24px,4vw,32px);text-align:center;margin-bottom:48px}
+
+  .tabs{display:flex;justify-content:center;gap:0;margin-bottom:32px;border-bottom:1px solid var(--line)}
+  .tab{
+    padding:12px 24px;cursor:pointer;
+    font-family:"Noto Serif JP",serif;font-size:15px;
+    color:var(--mute);
+    border-bottom:2px solid transparent;
+    transition:0.2s;
+    background:none;border-top:none;border-left:none;border-right:none;
+  }
+  .tab.active{color:var(--burgundy);border-bottom-color:var(--burgundy);font-weight:700}
+  .tab:hover{color:var(--burgundy)}
+
+  .store-card{display:none;background:#fff;border:1px solid var(--line);padding:32px}
+  .store-card.active{display:block}
+  .store-card .name{font-family:"Noto Serif JP",serif;font-size:24px;color:var(--burgundy);margin-bottom:8px}
+  .store-card .badge{display:inline-block;background:var(--gold);color:#fff;font-size:10px;letter-spacing:0.2em;padding:4px 10px;margin-bottom:18px}
+  .store-info{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-top:20px}
+  .info-item .k{font-size:10px;color:var(--mute);letter-spacing:0.25em;margin-bottom:4px}
+  .info-item .v{font-size:14px;color:var(--ink)}
+  .info-item .v.tel{font-family:"Noto Serif JP",serif;font-size:18px;color:var(--burgundy);font-weight:700}
+  .store-cta{margin-top:24px;display:flex;gap:12px;flex-wrap:wrap}
+  .btn{
+    display:inline-block;padding:12px 24px;
+    text-decoration:none;font-size:13px;letter-spacing:0.15em;
+    transition:0.2s;
+  }
+  .btn-primary{background:var(--burgundy);color:var(--cream)}
+  .btn-primary:hover{background:var(--burgundy-d)}
+  .btn-outline{border:1px solid var(--burgundy);color:var(--burgundy)}
+  .btn-outline:hover{background:var(--burgundy);color:var(--cream)}
+
+  /* MENU */
+  .menu{padding:72px 0;text-align:center}
+  .menu .label{font-size:11px;color:var(--burgundy);letter-spacing:0.4em;margin-bottom:18px}
+  .menu h2{font-family:"Noto Serif JP",serif;font-size:clamp(24px,4vw,32px);margin-bottom:48px}
+  .menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);text-align:left}
+  .menu-item{background:#fff;padding:24px}
+  .menu-item .badge{display:inline-block;background:var(--burgundy);color:var(--cream);font-size:10px;letter-spacing:0.2em;padding:3px 10px;margin-bottom:10px}
+  .menu-item h3{font-family:"Noto Serif JP",serif;font-size:17px;margin-bottom:6px;color:var(--ink)}
+  .menu-item p{font-size:12px;color:var(--mute);line-height:1.7}
+
+  /* CALENDAR */
+  .calendar{padding:72px 0;background:var(--cream-d)}
+  .calendar .label{font-size:11px;color:var(--burgundy);letter-spacing:0.4em;margin-bottom:18px;text-align:center}
+  .calendar h2{font-family:"Noto Serif JP",serif;font-size:clamp(24px,4vw,32px);text-align:center;margin-bottom:36px}
+  .cal-wrap{max-width:560px;margin:0 auto;background:#fff;padding:32px;border:1px solid var(--line)}
+  .cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+  .cal-head button{background:none;border:1px solid var(--line);width:32px;height:32px;cursor:pointer;font-size:14px;color:var(--burgundy)}
+  .cal-head button:hover{background:var(--burgundy);color:#fff;border-color:var(--burgundy)}
+  .cal-month{font-family:"Noto Serif JP",serif;font-size:20px;color:var(--burgundy)}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+  .cal-dow{padding:8px 0;text-align:center;font-size:11px;color:var(--mute);letter-spacing:0.15em;font-weight:500}
+  .cal-day{
+    aspect-ratio:1;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--cream);font-size:14px;
+    border-radius:2px;
+  }
+  .cal-day.empty{background:transparent}
+  .cal-day.closed{background:var(--red);color:#fff;font-weight:700;position:relative}
+  .cal-day.closed::after{content:"休";position:absolute;font-size:8px;bottom:2px;right:4px}
+  .cal-day.today{outline:2px solid var(--gold);font-weight:700}
+  .cal-legend{display:flex;gap:20px;justify-content:center;margin-top:18px;font-size:11px;color:var(--mute)}
+  .cal-legend .dot{display:inline-block;width:10px;height:10px;background:var(--red);margin-right:6px;vertical-align:middle}
+  .cal-legend .dot.tod{background:transparent;border:2px solid var(--gold)}
+  .cal-hours{
+    margin-top:24px;padding-top:20px;border-top:1px solid var(--line);
+    text-align:center;font-size:13px;color:var(--soba);line-height:2;
+  }
+  .cal-hours strong{color:var(--burgundy);font-family:"Noto Serif JP",serif}
+
+  /* RECRUIT */
+  .recruit{padding:72px 0;background:var(--ink);color:var(--cream)}
+  .recruit .label{font-size:11px;color:var(--gold);letter-spacing:0.4em;margin-bottom:18px;text-align:center}
+  .recruit h2{font-family:"Noto Serif JP",serif;font-size:clamp(24px,4vw,32px);text-align:center;margin-bottom:16px}
+  .recruit .lead{text-align:center;max-width:580px;margin:0 auto 48px;opacity:0.85;font-size:14px}
+  .jobs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+  .job{
+    background:rgba(248,244,236,0.05);
+    border:1px solid rgba(184,137,58,0.3);
+    padding:24px;
+  }
+  .job .role{font-family:"Noto Serif JP",serif;font-size:18px;color:var(--gold);margin-bottom:8px}
+  .job .type{font-size:10px;color:var(--cream);letter-spacing:0.25em;opacity:0.7;margin-bottom:14px}
+  .job dl{display:grid;grid-template-columns:80px 1fr;row-gap:8px;font-size:13px}
+  .job dt{color:var(--gold);opacity:0.8;font-size:11px;letter-spacing:0.15em}
+  .job dd{color:var(--cream);opacity:0.9}
+  .recruit-cta{text-align:center;margin-top:40px}
+  .recruit-cta a{
+    display:inline-block;padding:16px 40px;
+    background:var(--gold);color:var(--ink);
+    text-decoration:none;font-size:13px;letter-spacing:0.25em;font-weight:700;
+    transition:0.2s;
+  }
+  .recruit-cta a:hover{background:var(--cream)}
+  .recruit-cta .sub{display:block;margin-top:12px;font-size:11px;color:var(--cream);opacity:0.6;letter-spacing:0.15em}
+
+  /* CONTACT */
+  .contact{padding:72px 0;text-align:center}
+  .contact .label{font-size:11px;color:var(--burgundy);letter-spacing:0.4em;margin-bottom:18px}
+  .contact h2{font-family:"Noto Serif JP",serif;font-size:clamp(24px,4vw,32px);margin-bottom:24px}
+  .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:40px}
+  .contact-card{background:#fff;padding:32px 20px}
+  .contact-card .ttl{font-family:"Noto Serif JP",serif;font-size:16px;color:var(--burgundy);margin-bottom:6px}
+  .contact-card .tel{font-family:"Noto Serif JP",serif;font-size:22px;font-weight:700;color:var(--ink);margin:8px 0}
+  .contact-card .hint{font-size:11px;color:var(--mute);letter-spacing:0.15em}
+
+  /* FOOTER */
+  footer{background:var(--burgundy-d);color:var(--cream);padding:48px 0 24px;text-align:center}
+  footer .logo{color:var(--cream)}
+  footer .logo .sub{color:var(--gold)}
+  footer .copy{margin-top:20px;font-size:11px;opacity:0.6;letter-spacing:0.2em}
+
+  /* MOCK BANNER */
+  .mock-banner{
+    background:#FFF3CD;color:#856404;
+    text-align:center;padding:10px;font-size:11px;letter-spacing:0.1em;
+    border-bottom:1px solid #FFEEBA;
+  }
+</style>
+</head>
+<body>
+
+<div class="mock-banner">⚠ デモ・モックアップページ — 内容は仮置きです（高橋秀夫 / AIの町医者）</div>
+
+<!-- TOPNAV -->
+<nav class="topnav">
+  <div class="wrap">
+    <div class="logo">
+      食道楽 ひさご
+      <span class="sub">SHOKUDORAKU HISAGO</span>
+    </div>
+    <div class="navlinks">
+      <a href="#concept">こだわり</a>
+      <a href="#stores">店舗</a>
+      <a href="#menu">メニュー</a>
+      <a href="#calendar">営業日</a>
+      <a href="#recruit">採用</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="stamp">FUKUSHIMA &nbsp;·&nbsp; SINCE 創業以来</div>
+    <h1>
+      本格 <span class="accent">和牛</span> と<br>
+      手打ち <span class="accent">蕎麦</span>。
+    </h1>
+    <p class="lead">
+      米沢牛・山形牛を熟練の目で見極め、蕎麦は店内で打つ。
+      福島県内3店舗で、ご家族のお祝いから接待まで、
+      静かに、確かに、お迎えしています。
+    </p>
+    <div class="stores-mini">
+      <span>石川 本店</span>
+      <span>須賀川 店</span>
+      <span>白河 店</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONCEPT -->
+<section class="concept" id="concept">
+  <div class="wrap">
+    <div class="label">CONCEPT</div>
+    <h2>素材と仕事に、<br>正直であること。</h2>
+    <p>
+      私たちが扱うのは、米沢牛、山形牛、そして毎朝打つ手打ち蕎麦。
+      牛は産地ではなく、その個体を見て選びます。
+      蕎麦は機械を使わず、店主の手でその日の分を打ち上げます。
+    </p>
+    <p>
+      ご家族でも、ご接待でも、お一人でも。<br>
+      どんな席でも「これがひさごの味」をお伝えできるよう、
+      3店舗が同じ気持ちで仕事をしています。
+    </p>
+
+    <div class="features">
+      <div class="feature">
+        <div class="ic">●</div>
+        <h3>米沢牛・山形牛</h3>
+        <p>厳選した黒毛和牛を、部位ごとに最も美味しい焼き方でご提供します。</p>
+      </div>
+      <div class="feature">
+        <div class="ic">●</div>
+        <h3>毎日 手打ち蕎麦</h3>
+        <p>その日の分だけを、店内で打ち上げ。お肉のあとの〆の一枚をどうぞ。</p>
+      </div>
+      <div class="feature">
+        <div class="ic">●</div>
+        <h3>個室・座敷完備</h3>
+        <p>お子様連れ、ご法要、ご接待。最大30名様までの個室を3店舗にご用意。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORES -->
+<section class="stores" id="stores">
+  <div class="wrap">
+    <div class="label">3 STORES</div>
+    <h2>店舗のご案内</h2>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="ishikawa">石川 本店</button>
+      <button class="tab" data-tab="sukagawa">須賀川 店</button>
+      <button class="tab" data-tab="shirakawa">白河 店</button>
+    </div>
+
+    <!-- 石川 -->
+    <div class="store-card active" id="ishikawa">
+      <span class="badge">本店</span>
+      <div class="name">食道楽 ひさご 石川本店</div>
+      <p style="color:var(--mute);font-size:13px;margin-top:6px">創業の地。広い駐車場と、四季を映す座敷。</p>
+
+      <div class="store-info">
+        <div class="info-item">
+          <div class="k">ADDRESS</div>
+          <div class="v">〒963-7858 福島県石川郡石川町塩沢字大日向71-2</div>
+        </div>
+        <div class="info-item">
+          <div class="k">HOURS</div>
+          <div class="v">11:30〜15:00 / 17:00〜22:00<br>（LO 21:30）</div>
+        </div>
+        <div class="info-item">
+          <div class="k">CLOSED</div>
+          <div class="v">火曜日</div>
+        </div>
+        <div class="info-item">
+          <div class="k">SEATS</div>
+          <div class="v">テーブル・座敷・個室</div>
+        </div>
+      </div>
+      <div class="store-cta">
+        <a class="btn btn-primary" href="#contact">ご予約・お問い合わせ</a>
+        <a class="btn btn-outline" href="https://maps.google.com/?q=食道楽ひさご石川本店" target="_blank">Google マップで見る</a>
+      </div>
+    </div>
+
+    <!-- 須賀川 -->
+    <div class="store-card" id="sukagawa">
+      <span class="badge">SUKAGAWA</span>
+      <div class="name">食道楽 ひさご 須賀川店</div>
+      <p style="color:var(--mute);font-size:13px;margin-top:6px">須賀川駅近く、お子様歓迎。家族の節目を、いつでも。</p>
+
+      <div class="store-info">
+        <div class="info-item">
+          <div class="k">ADDRESS</div>
+          <div class="v">〒962-0028 福島県須賀川市茶畑町5</div>
+        </div>
+        <div class="info-item">
+          <div class="k">TEL</div>
+          <div class="v tel">0248-73-0722</div>
+        </div>
+        <div class="info-item">
+          <div class="k">HOURS</div>
+          <div class="v">11:30〜15:00 / 17:00〜22:00<br>（LO 21:30）</div>
+        </div>
+        <div class="info-item">
+          <div class="k">CLOSED</div>
+          <div class="v">火曜日</div>
+        </div>
+        <div class="info-item">
+          <div class="k">SEATS</div>
+          <div class="v">60席（個室20〜30人）</div>
+        </div>
+        <div class="info-item">
+          <div class="k">PARKING</div>
+          <div class="v">20台</div>
+        </div>
+      </div>
+      <div class="store-cta">
+        <a class="btn btn-primary" href="tel:0248730722">電話で予約 (0248-73-0722)</a>
+        <a class="btn btn-outline" href="https://maps.google.com/?q=食道楽ひさご須賀川店" target="_blank">Google マップで見る</a>
+      </div>
+    </div>
+
+    <!-- 白河 -->
+    <div class="store-card" id="shirakawa">
+      <span class="badge">SHIRAKAWA</span>
+      <div class="name">食道楽 ひさご 白河店</div>
+      <p style="color:var(--mute);font-size:13px;margin-top:6px">新白河駅エリア。出張・観光のお客様にも便利な立地。</p>
+
+      <div class="store-info">
+        <div class="info-item">
+          <div class="k">ADDRESS</div>
+          <div class="v">〒961-0954 福島県白河市老久保49-15</div>
+        </div>
+        <div class="info-item">
+          <div class="k">HOURS</div>
+          <div class="v">11:30〜15:00 / 17:00〜22:00<br>（LO 21:30）</div>
+        </div>
+        <div class="info-item">
+          <div class="k">CLOSED</div>
+          <div class="v">火曜日</div>
+        </div>
+        <div class="info-item">
+          <div class="k">SEATS</div>
+          <div class="v">テーブル・座敷・個室</div>
+        </div>
+      </div>
+      <div class="store-cta">
+        <a class="btn btn-primary" href="#contact">ご予約・お問い合わせ</a>
+        <a class="btn btn-outline" href="https://maps.google.com/?q=食道楽ひさご白河店" target="_blank">Google マップで見る</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu" id="menu">
+  <div class="wrap">
+    <div class="label">SIGNATURE</div>
+    <h2>看板メニュー</h2>
+
+    <div class="menu-grid">
+      <div class="menu-item">
+        <span class="badge">No.01</span>
+        <h3>幻の米沢牛 特上カルビ</h3>
+        <p>サシの入り方が綺麗な部位を一枚ずつ。塩でまず一切れ。</p>
+      </div>
+      <div class="menu-item">
+        <span class="badge">No.02</span>
+        <h3>せせり焼肉</h3>
+        <p>仕入れ次第。希少な部位を、こだわりの炙りで。</p>
+      </div>
+      <div class="menu-item">
+        <span class="badge">No.03</span>
+        <h3>和牛タン・ネギタン</h3>
+        <p>厚切り。レモン、塩、ねぎダレ。三段の楽しみ方を。</p>
+      </div>
+      <div class="menu-item">
+        <span class="badge">No.04</span>
+        <h3>手打ち ざる蕎麦</h3>
+        <p>〆に、または蕎麦単品で。その日の分のみご用意。</p>
+      </div>
+      <div class="menu-item">
+        <span class="badge">No.05</span>
+        <h3>ファミリーセット（5名様）</h3>
+        <p>家族の節目に。お子様も楽しめる組み合わせ。</p>
+      </div>
+      <div class="menu-item">
+        <span class="badge">No.06</span>
+        <h3>生チョコアイス</h3>
+        <p>食後の一品。ご好評につき定番化しました。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CALENDAR -->
+<section class="calendar" id="calendar">
+  <div class="wrap">
+    <div class="label">CALENDAR</div>
+    <h2>営業カレンダー</h2>
+
+    <div class="cal-wrap">
+      <div class="cal-head">
+        <button onclick="changeMonth(-1)">◀</button>
+        <div class="cal-month" id="cal-month"></div>
+        <button onclick="changeMonth(1)">▶</button>
+      </div>
+      <div class="cal-grid" id="cal-grid"></div>
+      <div class="cal-legend">
+        <span><span class="dot"></span>定休日（火曜）</span>
+        <span><span class="dot tod"></span>本日</span>
+      </div>
+      <div class="cal-hours">
+        <strong>営業時間</strong><br>
+        11:30 〜 15:00 ／ 17:00 〜 22:00（LO 21:30）<br>
+        <strong>定休日</strong>　毎週 火曜日<br>
+        ※年末年始・お盆等の臨時休業は別途お知らせします
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECRUIT -->
+<section class="recruit" id="recruit">
+  <div class="wrap">
+    <div class="label">RECRUIT</div>
+    <h2>仲間を募集しています</h2>
+    <p class="lead">
+      創業以来の味を、次の世代に渡していくために。<br>
+      ひさご3店舗で、一緒に働いてくださる方を募集しています。<br>
+      未経験の方も丁寧にお教えします。
+    </p>
+
+    <div class="jobs">
+      <div class="job">
+        <div class="role">ホールスタッフ</div>
+        <div class="type">PART · FULL TIME</div>
+        <dl>
+          <dt>勤務地</dt><dd>石川／須賀川／白河（応相談）</dd>
+          <dt>時給</dt><dd>1,050円〜（経験により優遇）</dd>
+          <dt>時間</dt><dd>週2日〜・1日3h〜OK</dd>
+          <dt>歓迎</dt><dd>主婦（夫）・学生・Wワーク</dd>
+        </dl>
+      </div>
+      <div class="job">
+        <div class="role">キッチンスタッフ</div>
+        <div class="type">PART · FULL TIME</div>
+        <dl>
+          <dt>勤務地</dt><dd>石川／須賀川／白河（応相談）</dd>
+          <dt>時給</dt><dd>1,100円〜（経験により優遇）</dd>
+          <dt>時間</dt><dd>週3日〜・1日4h〜OK</dd>
+          <dt>歓迎</dt><dd>飲食経験者・調理を学びたい方</dd>
+        </dl>
+      </div>
+      <div class="job">
+        <div class="role">店長候補（社員）</div>
+        <div class="type">FULL TIME</div>
+        <dl>
+          <dt>勤務地</dt><dd>3店舗いずれか</dd>
+          <dt>月給</dt><dd>250,000円〜（経験考慮）</dd>
+          <dt>賞与</dt><dd>年2回・各種手当あり</dd>
+          <dt>歓迎</dt><dd>飲食店経験者・チーム運営の興味ある方</dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="recruit-cta">
+      <a href="#contact">エントリー・ご相談はこちら</a>
+      <span class="sub">LINE・電話・お問い合わせフォームよりお気軽にどうぞ</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="label">CONTACT</div>
+    <h2>ご予約・お問い合わせ</h2>
+    <p style="max-width:560px;margin:0 auto;color:var(--soba)">
+      ご宴会、お祝い、ご法要、ご接待など、<br>
+      お席のご相談はお電話でお気軽にどうぞ。
+    </p>
+
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="ttl">石川 本店</div>
+        <div class="tel">— 仮 —</div>
+        <div class="hint">SHOKUDORAKU HISAGO ISHIKAWA</div>
+      </div>
+      <div class="contact-card">
+        <div class="ttl">須賀川 店</div>
+        <div class="tel">0248-73-0722</div>
+        <div class="hint">SHOKUDORAKU HISAGO SUKAGAWA</div>
+      </div>
+      <div class="contact-card">
+        <div class="ttl">白河 店</div>
+        <div class="tel">— 仮 —</div>
+        <div class="hint">SHOKUDORAKU HISAGO SHIRAKAWA</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="logo">
+      食道楽 ひさご
+      <span class="sub">SHOKUDORAKU HISAGO</span>
+    </div>
+    <div class="copy">© 食道楽ひさご &nbsp;·&nbsp; FUKUSHIMA</div>
+  </div>
+</footer>
+
+<script>
+  // TABS
+  const tabs = document.querySelectorAll('.tab');
+  const cards = document.querySelectorAll('.store-card');
+  tabs.forEach(t => t.addEventListener('click', () => {
+    tabs.forEach(x => x.classList.remove('active'));
+    cards.forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById(t.dataset.tab).classList.add('active');
+  }));
+
+  // CALENDAR
+  let calYear = new Date().getFullYear();
+  let calMonth = new Date().getMonth();
+  const today = new Date();
+  const todayKey = today.getFullYear() + '-' + today.getMonth() + '-' + today.getDate();
+
+  function renderCal(){
+    document.getElementById('cal-month').textContent =
+      calYear + '年 ' + (calMonth+1) + '月';
+    const grid = document.getElementById('cal-grid');
+    grid.innerHTML = '';
+    ['日','月','火','水','木','金','土'].forEach(d => {
+      const c = document.createElement('div');
+      c.className = 'cal-dow';
+      c.textContent = d;
+      grid.appendChild(c);
+    });
+    const firstDay = new Date(calYear, calMonth, 1).getDay();
+    const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+    for(let i=0;i<firstDay;i++){
+      const c = document.createElement('div');
+      c.className = 'cal-day empty';
+      grid.appendChild(c);
+    }
+    for(let d=1;d<=daysInMonth;d++){
+      const dt = new Date(calYear, calMonth, d);
+      const c = document.createElement('div');
+      c.className = 'cal-day';
+      if(dt.getDay() === 2) c.classList.add('closed');
+      if((calYear + '-' + calMonth + '-' + d) === todayKey) c.classList.add('today');
+      c.textContent = d;
+      grid.appendChild(c);
+    }
+  }
+  function changeMonth(delta){
+    calMonth += delta;
+    if(calMonth < 0){ calMonth = 11; calYear--; }
+    if(calMonth > 11){ calMonth = 0; calYear++; }
+    renderCal();
+  }
+  renderCal();
+</script>
+
+</body>
+</html>
