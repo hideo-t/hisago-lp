@@ -73,12 +73,18 @@
     <p>✅ 応募を受け付けました！</p>
     <p class="done num" id="receipt"></p>
     <p class="hint">担当者より折り返しご連絡します。この番号は控えておいてください。</p>
+    <a id="lineAddBtn" href="#" target="_blank" rel="noopener"
+       style="display:none;margin-top:18px;padding:13px 16px;border-radius:12px;background:#06c755;color:#fff;font-weight:700;text-decoration:none">
+      ＋ LINEで友だち追加（面接の連絡が届きます）
+    </a>
   </div>
 </div>
 
 <script>
   // ★ 本番デプロイ時に register.html と同じ GAS WebApp URL に置換
   const GAS_URL = 'https://script.google.com/macros/s/AKfycbx_l9A9SVkyJrvZYmqvMrn0aOJ9w3EdE4rbmZSh1JK9VckiWaN2e9EUS4RXfkPnJ0nI/exec';
+  // ★ LINE公式アカウントの友だち追加URLに置換すると、応募完了画面に「友だち追加」ボタンが出る（未設定なら非表示）
+  const LINE_ADD_URL = 'PLACEHOLDER_HISAGO_LINE_ADD_URL';
   const DAYS = ['月','火','水','木','金','土','日'];
 
   const $ = (id) => document.getElementById(id);
@@ -142,6 +148,9 @@
         $('formCard').style.display = 'none';
         $('receipt').textContent = r.receipt;
         $('doneCard').style.display = 'block';
+        if (LINE_ADD_URL && LINE_ADD_URL.indexOf('PLACEHOLDER') < 0) {
+          const lb = $('lineAddBtn'); lb.href = LINE_ADD_URL; lb.style.display = 'block';
+        }
         window.scrollTo(0, 0);
       } else {
         showErr(r.message || '送信に失敗しました');
