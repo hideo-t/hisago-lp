@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>スタッフ募集｜食道楽ひさご</title>
+<style>
+  :root { --accent:#d9662a; --bg:#1a1512; --card:#fff; --ink:#2a2320; --muted:#8a7f78; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:system-ui,"Hiragino Sans","Noto Sans JP",sans-serif; background:var(--bg); color:var(--ink); }
+  .wrap { max-width:520px; margin:0 auto; padding:20px 16px 60px; }
+  .hero { color:#fff; text-align:center; padding:28px 8px 20px; }
+  .hero h1 { font-size:1.6rem; margin:.2em 0; }
+  .hero p { color:#e8ddd5; font-size:.9rem; margin:.2em 0; }
+  .card { background:var(--card); border-radius:16px; padding:20px 18px; box-shadow:0 8px 30px rgba(0,0,0,.25); }
+  label { display:block; font-weight:600; margin:16px 0 6px; font-size:.92rem; }
+  .req::after { content:" *"; color:var(--accent); }
+  input[type=text], input[type=tel], input[type=email], select, textarea {
+    width:100%; padding:12px; border:1px solid #ddd; border-radius:10px; font-size:1rem; font-family:inherit; }
+  textarea { min-height:72px; resize:vertical; }
+  .days { display:flex; flex-wrap:wrap; gap:8px; margin-top:4px; }
+  .days label { display:inline-flex; align-items:center; gap:4px; margin:0; font-weight:500;
+    border:1px solid #ddd; border-radius:20px; padding:6px 12px; cursor:pointer; }
+  .days input { accent-color:var(--accent); }
+  button { width:100%; margin-top:24px; padding:15px; border:0; border-radius:12px;
+    background:var(--accent); color:#fff; font-size:1.05rem; font-weight:700; cursor:pointer; }
+  button:disabled { opacity:.5; cursor:not-allowed; }
+  .msg { margin-top:14px; padding:12px; border-radius:10px; font-size:.92rem; display:none; }
+  .msg.err { background:#fdecea; color:#b3261e; display:block; }
+  .done { text-align:center; padding:30px 10px; }
+  .done .num { font-size:1.5rem; font-weight:800; color:var(--accent); letter-spacing:1px; }
+  .hint { color:var(--muted); font-size:.8rem; margin-top:4px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <h1>ひさごで、働く。</h1>
+    <p>1日だけ・週1だけでもOK。スマホでかんたん応募。</p>
+  </div>
+
+  <div class="card" id="formCard">
+    <label class="req">お名前</label>
+    <input type="text" id="name" placeholder="山田 太郎" autocomplete="name">
+
+    <label>フリガナ</label>
+    <input type="text" id="kana" placeholder="ヤマダ タロウ">
+
+    <label class="req">希望の店舗</label>
+    <select id="store"><option value="">読み込み中…</option></select>
+
+    <label>入れる曜日（複数OK）</label>
+    <div class="days" id="days"></div>
+
+    <label>面接の希望日（任意）</label>
+    <input type="text" id="interviewPref" placeholder="例: 8/5 の午後、平日夕方 など">
+
+    <label class="req">電話番号</label>
+    <input type="tel" id="phone" placeholder="090-1234-5678" autocomplete="tel">
+
+    <label>メールアドレス（任意）</label>
+    <input type="email" id="email" placeholder="taro@example.com" autocomplete="email">
+    <div class="hint">入力いただくと受付確認メールをお送りします。</div>
+
+    <label>ひとことメモ（任意）</label>
+    <textarea id="memo" placeholder="希望や質問があればどうぞ"></textarea>
+
+    <div class="msg" id="msg"></div>
+    <button id="submit">応募する</button>
+  </div>
+
+  <div class="card done" id="doneCard" style="display:none">
+    <p>✅ 応募を受け付けました！</p>
+    <p class="done num" id="receipt"></p>
+    <p class="hint">担当者より折り返しご連絡します。この番号は控えておいてください。</p>
+  </div>
+</div>
+
+<script>
+  // ★ 本番デプロイ時に register.html と同じ GAS WebApp URL に置換
+  const GAS_URL = 'https://script.google.com/macros/s/AKfycbx_l9A9SVkyJrvZYmqvMrn0aOJ9w3EdE4rbmZSh1JK9VckiWaN2e9EUS4RXfkPnJ0nI/exec';
+  const DAYS = ['月','火','水','木','金','土','日'];
+
+  const $ = (id) => document.getElementById(id);
+  const daysBox = $('days');
+  DAYS.forEach(d => {
+    const l = document.createElement('label');
+    l.innerHTML = '<input type="checkbox" value="'+d+'">'+d;
+    daysBox.appendChild(l);
+  });
+
+  // register.html と同じ通信作法: POST + text/plain + JSON body（クロスオリジン実績あり）
+  async function callGas(payload) {
+    const res = await fetch(GAS_URL + '?_=' + Date.now(), {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      cache: 'no-store',
+      body: JSON.stringify(payload)
+    });
+    return res.json();
+  }
+
+  // 募集中店舗を読み込み
+  (async () => {
+    const sel = $('store');
+    try {
+      const r = await callGas({ action: 'recruit_openings' });
+      const stores = (r && r.stores) || [];
+      if (!stores.length) {
+        sel.innerHTML = '<option value="">現在募集を停止しています</option>';
+        return;
+      }
+      sel.innerHTML = '<option value="">選んでください</option>';
+      stores.forEach(s => {
+        const o = document.createElement('option');
+        o.value = s.id; o.textContent = s.name + (s.note ? '（'+s.note+'）' : '');
+        sel.appendChild(o);
+      });
+    } catch (e) {
+      sel.innerHTML = '<option value="">読み込みに失敗しました</option>';
+    }
+  })();
+
+  function showErr(m) { const e = $('msg'); e.textContent = m; e.className = 'msg err'; }
+
+  $('submit').addEventListener('click', async () => {
+    const days = Array.from(daysBox.querySelectorAll('input:checked')).map(c => c.value);
+    const payload = {
+      action: 'apply_submit',
+      name: $('name').value, kana: $('kana').value, store: $('store').value,
+      days: days, interviewPref: $('interviewPref').value,
+      phone: $('phone').value, email: $('email').value, memo: $('memo').value
+    };
+    if (!payload.name.trim()) return showErr('お名前を入力してください');
+    if (!payload.store) return showErr('希望店舗を選んでください');
+    if (!payload.phone.trim()) return showErr('電話番号を入力してください');
+
+    const btn = $('submit'); btn.disabled = true; btn.textContent = '送信中…';
+    try {
+      const r = await callGas(payload);
+      if (r.ok) {
+        $('formCard').style.display = 'none';
+        $('receipt').textContent = r.receipt;
+        $('doneCard').style.display = 'block';
+        window.scrollTo(0, 0);
+      } else {
+        showErr(r.message || '送信に失敗しました');
+        btn.disabled = false; btn.textContent = '応募する';
+      }
+    } catch (e) {
+      showErr('通信エラーが発生しました。時間をおいて再度お試しください');
+      btn.disabled = false; btn.textContent = '応募する';
+    }
+  });
+</script>
+</body>
+</html>
