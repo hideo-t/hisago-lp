@@ -513,25 +513,11 @@
       </div>
       <p>「焼肉のあとに、さらっとそば」——県内のお客さまに50年愛されてきた、ひさごの定番をご紹介します。</p>
     </div>
-    <div class="menu-grid">
-      <div class="dish reveal" style="background-image:url('https://lh3.googleusercontent.com/place-photos/AJRVUZOvXlo9ktm2sfUKJBqoRZ59KjApz3H-MG9FcYS3GGAYhSJTVrZUCetX5WK0pa2rKc_GWFo2UU1Q-DfvjpYD_n4YX0QZC66ClW6KaQlGSDO4aNEwhQ6MFAqfU_UO107aEiUBCB8SUUBv_tVj1Q=s4800-w800-h600')">
-        <span class="tag">名物</span>
-        <div class="info"><div class="ja">ダブルカルビ</div><div class="desc">厚切り・やわらか。塩でもタレでも</div></div>
-      </div>
-      <div class="dish reveal" style="background-image:url('https://lh3.googleusercontent.com/place-photos/AJRVUZNa4dmpb_Un9bgw-ftrvTYFEoyyMRrB-bNHa_oqmLytnozP7-cXdggwfQobhqRdZFs9p6ELdMrpgmOHadR2HMb99VydBl84B9RdWfAgmmQoBfgK6vuISyRLNwtzp7a4rkGOIximvuyjnE1lxw=s4800-w800-h600')">
-        <span class="tag">ひさご流</span>
-        <div class="info"><div class="ja">石焼ビビンバ</div><div class="desc">熱々の石鍋で、最後までアツアツ</div></div>
-      </div>
-      <div class="dish reveal" style="background-image:url('https://lh3.googleusercontent.com/place-photos/AJRVUZOnYSYlM7Vu2cd6KA7jLsp-vlZHUJgemRcbqoDLyvetqo5AlVR5c2x9Vs41a3BhoXRkdLpTe7XRaGO5HnbeaSFPoG-2hrdTrmZqEwWxVq0eBYiB5vzJThJafOp_5tfUzfqAVipxUvrPn_Lvng=s4800-w800-h600')">
-        <span class="tag">セット</span>
-        <div class="info"><div class="ja">ミニ天丼セット</div><div class="desc">海老天・穴子天と、もりそば</div></div>
-      </div>
-      <div class="dish reveal" style="background-image:url('https://lh3.googleusercontent.com/place-photos/AJRVUZMD6TdC9XRU6regp2rLBRLSalJblyvvrr8STT_zw1YHoxFuZfZ8cJ-GGhb9YdjM-uCNqrxFmjWIhZepaDotVqEC-Q0dk5TqruHiC0JLPBsBL_AffX7OGAelgxeamKU7V-g_2tmgn0SoiDgt78goFUcmLw=s4800-w800-h600')">
-        <span class="tag">〆の一杯</span>
-        <div class="info"><div class="ja">カルビ／カレーラーメン</div><div class="desc">焼肉屋がつくる、クセになる一杯</div></div>
-      </div>
+    <div class="reveal" style="background:linear-gradient(135deg,rgba(192,162,90,.08),rgba(0,0,0,.15));border:1px dashed rgba(192,162,90,.4);border-radius:16px;padding:52px 24px;text-align:center;color:#8a7f78">
+      <div style="font-size:42px">📷</div>
+      <div style="font-weight:800;color:#c0a25a;font-size:1.15rem;margin-top:10px">お品書き（写真）準備中</div>
+      <div style="font-size:.88rem;margin-top:8px">ただいま撮影・準備中です。近日公開します。</div>
     </div>
-    <p class="menu-note">※ メニュー・価格はイメージです。実際のお品書きに合わせて差し替えできます。</p>
   </div>
 </section>
 
@@ -754,11 +740,27 @@
   },{threshold:.15});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-  /* calendar */
-  let calY=2026, calM=4; // month index: 4 = May
-  const TODAY=new Date(2026,4,14);
+  /* calendar — 営業日マスタ（スプレッドシート）から取得。営業○/休業× を反映 */
+  const CAL_GAS_URL='https://script.google.com/macros/s/AKfycbx_l9A9SVkyJrvZYmqvMrn0aOJ9w3EdE4rbmZSh1JK9VckiWaN2e9EUS4RXfkPnJ0nI/exec';
+  const _now=new Date();
+  let calY=_now.getFullYear(), calM=_now.getMonth();
+  const TODAY=new Date(_now.getFullYear(),_now.getMonth(),_now.getDate());
   const wdNames=['日','月','火','水','木','金','土'];
-  function renderCal(){
+  const _calCache={};
+  const _p2=n=>(n<10?'0':'')+n;
+  async function _fetchMonth(y,m){
+    const key=y+'-'+_p2(m+1);
+    if(_calCache[key]) return _calCache[key];
+    const from=y+'-'+_p2(m+1)+'-01';
+    const to=y+'-'+_p2(m+1)+'-'+_p2(new Date(y,m+1,0).getDate());
+    try{
+      const res=await fetch(CAL_GAS_URL+'?action=business_calendar&from='+from+'&to='+to+'&_='+Date.now());
+      const data=await res.json();
+      _calCache[key]=(data&&data.cal)||{};
+    }catch(e){ _calCache[key]={}; }
+    return _calCache[key];
+  }
+  async function renderCal(){
     const grid=document.getElementById('calGrid');
     document.getElementById('calTitle').textContent=calY+'年 '+(calM+1)+'月';
     grid.innerHTML='';
@@ -767,6 +769,7 @@
       c.className='wd'+(i===0?' sun':i===6?' sat':'');
       c.textContent=w;grid.appendChild(c);
     });
+    const cal=await _fetchMonth(calY,calM);
     const first=new Date(calY,calM,1).getDay();
     const days=new Date(calY,calM+1,0).getDate();
     for(let i=0;i<first;i++){
@@ -774,11 +777,14 @@
     }
     for(let d=1;d<=days;d++){
       const cell=document.createElement('div');
+      const ds=calY+'-'+_p2(calM+1)+'-'+_p2(d);
       const dow=new Date(calY,calM,d).getDay();
       cell.className='cal-cell';
       cell.textContent=d;
-      if(dow===2){ cell.classList.add('closed'); }      // 火曜定休
-      else { cell.classList.add('open-mark'); }
+      const rec=cal[ds];
+      const isOpen = rec ? !!rec.isOpen : (dow!==2);   // データがあればそれが正・無ければ火曜定休で仮表示
+      cell.classList.add(isOpen?'open-mark':'closed');
+      if(rec&&rec.memo){ cell.title=rec.memo; }
       if(calY===TODAY.getFullYear()&&calM===TODAY.getMonth()&&d===TODAY.getDate()){
         cell.classList.add('today');
       }
