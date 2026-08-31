@@ -22,6 +22,27 @@
     --gold:#d2a24c;
     --line:#06c755;
   }
+  .navlinks .is-news{color:var(--ember-lt);}
+  .navlinks .is-news::before{content:'●';font-size:8px;vertical-align:2px;margin-right:5px;color:var(--ember);}
+
+  /* お知らせ帯（ヒーロー直下） */
+  .notice{background:linear-gradient(180deg,rgba(223,90,28,.16),rgba(223,90,28,.06));
+          border-top:1px solid rgba(240,129,63,.35);border-bottom:1px solid rgba(240,129,63,.35);}
+  .notice .wrap{padding:22px 20px;display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap;}
+  .notice .tag{flex:0 0 auto;background:var(--ember);color:#fff;font-weight:700;font-size:12px;
+               letter-spacing:.12em;padding:5px 13px;border-radius:99px;margin-top:3px;}
+  .notice .body{flex:1 1 300px;min-width:0;}
+  .notice h2{font-size:clamp(17px,2.4vw,21px);font-weight:700;color:var(--kinari);
+             margin-bottom:6px;line-height:1.5;}
+  .notice p{color:var(--kinari-dim);font-size:14px;margin-bottom:10px;}
+  .notice .hours{display:inline-flex;flex-direction:column;gap:4px;
+                 background:rgba(0,0,0,.28);border:1px solid rgba(240,129,63,.3);
+                 border-radius:10px;padding:11px 17px;}
+  .notice .hours b{color:var(--ember-lt);font-size:clamp(16px,2.2vw,19px);letter-spacing:.02em;}
+  .notice .hours span{color:var(--kinari-dim);font-size:13px;}
+  .notice .from{color:var(--gold);font-weight:700;}
+  @media(max-width:560px){ .notice .wrap{gap:12px;} }
+
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
@@ -449,6 +470,7 @@
     <b>食道楽 <span>ひさご</span></b>
   </a>
   <div class="navlinks" id="navlinks">
+    <a href="#notice" class="link is-news">お知らせ</a>
     <a href="#story" class="link">物語</a>
     <a href="#menu" class="link">お品書き</a>
     <a href="#shops" class="link">店舗・カレンダー</a>
@@ -478,6 +500,23 @@
   </div>
   <div class="scrollcue">SCROLL</div>
 </header>
+
+<!-- ===== お知らせ ===== -->
+<!-- 2026-09-03 から須賀川店の夜の営業時間が変わる。店頭の貼り紙と同じ内容。 -->
+<section class="notice" id="notice">
+  <div class="wrap">
+    <span class="tag">お知らせ</span>
+    <div class="body">
+      <h2>須賀川店　夜の営業時間を変更いたします</h2>
+      <p>いつも食道楽ひさごをご利用いただき、ありがとうございます。<br>
+         誠に勝手ながら <span class="from">9月3日（木）</span> より、須賀川店の夜の営業時間を変更いたします。</p>
+      <div class="hours">
+        <b>営業時間　17:00 〜 21:30</b>
+        <span>最終入店 20:00　／　ラストオーダー 21:00</span>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ===== STORY ===== -->
 <section id="story">
@@ -544,7 +583,10 @@
         <div class="kana">SUKAGAWA — 新店舗</div>
         <div class="info-row"><div class="lbl">住所</div><div class="val">福島県須賀川市茶畑町5<br><span class="dim">郊外・駐車場あり</span></div></div>
         <div class="info-row"><div class="lbl">電話</div><div class="val">0248-73-0722</div></div>
-        <div class="info-row"><div class="lbl">営業</div><div class="val">ランチ 11:30–15:00<br>ディナー 17:00–22:00</div></div>
+        <div class="info-row"><div class="lbl">営業</div><div class="val">ランチ 11:30–15:00<br>
+          <span class="sk-old">ディナー 17:00–22:00<br></span>
+          <span class="sk-new">ディナー 17:00–21:30</span>
+          <span class="dim sk-note"><br>9月3日（木）より変更<br>最終入店 20:00 ／ L.O. 21:00</span></div></div>
         <div class="info-row"><div class="lbl">定休日</div><div class="val">火曜日 <span class="dim">＋連休あり（カレンダー参照）</span></div></div>
         <div class="info-row"><div class="lbl">お支払</div><div class="val">現金・各種クレジット・PayPay・電子マネー・須賀川ガス券</div></div>
         <div class="shop-actions">
@@ -705,7 +747,7 @@
         <h5>須賀川店</h5>
         <p><b>須賀川市茶畑町5</b></p>
         <p>0248-73-0722</p>
-        <p>11:30–15:00／17:00–22:00</p>
+        <p><span class="sk-old">11:30–15:00／17:00–22:00</span><span class="sk-new">11:30–15:00／17:00–21:30</span></p>
       </div>
     </div>
     <div class="foot-bottom">
@@ -716,6 +758,31 @@
 </footer>
 
 <script>
+// 須賀川店の夜の営業時間は 2026-09-03 から 17:00-21:30。
+// それまでは今の時間を、それ以降は新しい時間だけを出す。
+(function () {
+  var CHANGE = new Date(2026, 8, 3);            // 2026年9月3日(木)
+  var after = new Date() >= CHANGE;
+  var old = document.querySelectorAll('.sk-old');
+  var neu = document.querySelectorAll('.sk-new');
+  for (var i = 0; i < old.length; i++) old[i].style.display = after ? 'none' : '';
+  for (var j = 0; j < neu.length; j++) neu[j].style.display = after ? '' : 'none';
+  // 変更後は店舗カードの注記から「より変更」の言い回しを外す
+  if (after) {
+    var note = document.querySelector('.sk-note');
+    if (note) note.innerHTML = '<br>最終入店 20:00 ／ L.O. 21:00';
+    var sec = document.getElementById('notice');
+    if (sec) {
+      var h = sec.querySelector('h2');
+      if (h) h.textContent = '須賀川店　夜の営業時間を変更いたしました';
+      var f = sec.querySelector('.from');
+      if (f) f.textContent = '9月3日（木）';
+      var p = sec.querySelector('p');
+      if (p) p.innerHTML = 'いつも食道楽ひさごをご利用いただき、ありがとうございます。<br>'
+        + '<span class="from">9月3日（木）</span> より、須賀川店の夜の営業時間を変更しております。';
+    }
+  }
+})();
   /* nav scroll state */
   const nav=document.getElementById('nav');
   addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40));
