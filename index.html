@@ -310,6 +310,20 @@
   .mini-btn.tel{background:var(--ember);color:#fff;}
   .mini-btn.tel:hover{transform:translateY(-2px);}
 
+  /* --- 臨時休業のお知らせ（店舗ごと・突発） --- */
+  .tclose{
+    display:none;background:linear-gradient(180deg,rgba(168,50,31,.92),rgba(140,38,22,.92));
+    color:#fff;border-bottom:1px solid rgba(255,160,140,.4);
+  }
+  .tclose.on{display:block;}
+  .tclose .wrap{padding:13px 20px;display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;}
+  .tclose .tag{flex:0 0 auto;background:#fff;color:#a8321f;font-weight:800;font-size:12px;
+    letter-spacing:.08em;padding:4px 11px;border-radius:2px;}
+  .tclose .body{flex:1 1 280px;min-width:0;font-size:.93rem;line-height:1.75;}
+  .tclose .body b{font-size:1.02rem;}
+  .tclose .body .why{display:block;opacity:.92;font-size:.86rem;}
+  @media(max-width:560px){ .tclose .wrap{gap:9px;padding:12px 16px;} }
+
   /* --- hero の週カレンダー（今日から1週間・3店舗共通） --- */
   .hero-week{
     display:inline-flex;flex-direction:column;gap:7px;align-items:center;
@@ -330,6 +344,8 @@
   .hw-cell.open{color:var(--kinari);}
   .hw-cell.open .hw-st{color:#b9c77d;}
   .hw-cell.closed{background:#a8321f;color:#fff;}
+  /* 臨時休業は、定休（赤）と区別するため枠を付ける */
+  .hw-cell.temp{box-shadow:inset 0 0 0 2px #ffd166;}
   .hw-cell.closed .hw-st{color:#ffdad2;font-weight:700;}
   .hw-cell.today{outline:2px solid var(--kinari);outline-offset:-2px;}
   .hw-cell.today.closed{outline-color:#ffe9e2;}
@@ -521,6 +537,11 @@
 </nav>
 
 <!-- ===== HERO ===== -->
+<!-- 臨時休業（店舗ごと・突発）。出ていないときは表示しない。 -->
+<section class="tclose" id="tempClose"><div class="wrap">
+  <span class="tag">臨時休業</span><div class="body" id="tempCloseBody"></div>
+</div></section>
+
 <header class="hero" id="top">
   <div class="hero-bg">
     <div class="hero-slide"></div>
@@ -888,7 +909,9 @@
   //   calendar.json は tools/build_calendar.py で作り直す。
   //   更新を忘れても、②が最大30分（サーバ側キャッシュ）で追いつく。
   let _cal = null;                 // 日付 → {isOpen, memo}
+  let _temp = [];                  // 臨時休業 [{store,date,note}]
   let _calLoading = null;
+  const SLABEL={A:'石川店',B:'白河店',C:'須賀川店'};
 
   function _calRange(){
     const a=new Date(_now.getFullYear(), _now.getMonth()-4, 1);
@@ -924,7 +947,10 @@
     return fetch(CAL_GAS_URL+'?action=business_calendar&from='+from+'&to='+to)
       .then(r=>r.json())
       .then(d=>{
-        if(!d||!d.cal) return;
+        if(!d) return;
+        // 臨時休業は静的JSONに入れない（速報性が要るので、必ず最新を使う）
+        if(Array.isArray(d.temp)){ _temp=d.temp; _paintTemp(); }
+        if(!d.cal) return;
         const fresh=_norm(d.cal, false);
         if(Object.keys(fresh).length && JSON.stringify(fresh)!==JSON.stringify(_cal)){
           _cal=fresh; _paint(_cal);
@@ -938,6 +964,33 @@
   function renderCal(){
     _paint(_cal);                                   // いま持っているもので即描く
     if(!_cal && !_calLoading) _calLoading = _loadCal();
+  }
+
+  // 臨時休業のお知らせ帯。今日から1週間ぶんだけ出す。
+  //   ★遠い先のぶんまで出すと、いつも赤い帯が出ている状態になって読まれなくなる。
+  //   ★1件も無ければ帯ごと出さない。
+  function _paintTemp(){
+    const sec=document.getElementById('tempClose');
+    const box=document.getElementById('tempCloseBody');
+    if(!sec||!box) return;
+    const from=TODAY.getFullYear()+'-'+_p2(TODAY.getMonth()+1)+'-'+_p2(TODAY.getDate());
+    const lim=new Date(TODAY.getFullYear(),TODAY.getMonth(),TODAY.getDate()+7);
+    const to=lim.getFullYear()+'-'+_p2(lim.getMonth()+1)+'-'+_p2(lim.getDate());
+    const near=(_temp||[]).filter(t=>t.date>=from&&t.date<=to);
+    if(!near.length){ sec.classList.remove('on'); box.innerHTML=''; return; }
+    box.innerHTML=near.map(t=>{
+      const d=new Date(t.date+'T00:00:00');
+      const when=(t.date===from)?'本日':((d.getMonth()+1)+'月'+d.getDate()+'日('+wdNames[d.getDay()]+')');
+      const name=SLABEL[t.store]||t.store;
+      return '<div><b>'+when+'　'+_esc(name)+' は臨時休業とさせていただきます</b>'
+           + (t.note?'<span class="why">'+_esc(t.note)+'</span>':'')
+           + '</div>';
+    }).join('');
+    sec.classList.add('on');
+  }
+  function _esc(v){
+    return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
   // hero の週カレンダー（今日から1週間）。3店舗とも同じ営業日マスタを見る。
@@ -955,9 +1008,15 @@
       const rec=cal[ds];
       const isOpen = rec ? !!rec.isOpen : (dow!==2);   // 無ければ火曜定休で仮表示
       const cls=['hw-cell', isOpen?'open':'closed'];
+      // どこか1店でも臨時休業なら印を付ける（どの店かは上のお知らせ帯で読む）
+      const tmp=(_temp||[]).filter(t=>t.date===ds);
+      if(tmp.length){ cls.push('temp'); }
       if(i===0) cls.push('today');
       if(dow===0) cls.push('sun'); else if(dow===6) cls.push('sat');
-      cells.push('<div class="'+cls.join(' ')+'"'+(rec&&rec.memo?' title="'+rec.memo.replace(/"/g,'&quot;')+'"':'')+'>'
+      const tip = tmp.length
+        ? tmp.map(t=>(SLABEL[t.store]||t.store)+' 臨時休業'+(t.note?'（'+t.note+'）':'')).join(' / ')
+        : (rec&&rec.memo ? rec.memo : '');
+      cells.push('<div class="'+cls.join(' ')+'"'+(tip?' title="'+tip.replace(/"/g,'&quot;')+'"':'')+'>'
         +'<div class="hw-dow">'+wdNames[dow]+'</div>'
         +'<div class="hw-day">'+dt.getDate()+'</div>'
         +'<div class="hw-st">'+(isOpen?'営業':'休')+'</div>'
