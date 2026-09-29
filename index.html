@@ -183,6 +183,8 @@
     margin-top:40px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center;
     opacity:0;animation:rise .9s 1.1s forwards;
   }
+  /* 週カレンダーが入ったぶん、ボタンまでの間を詰める（40pxは週が無い前提の値） */
+  .hero-week + .hero-btns{margin-top:24px;}
   @keyframes rise{to{opacity:1;transform:translateY(0);}}
   .btn{
     padding:15px 30px;border-radius:2px;font-weight:700;letter-spacing:.1em;
@@ -310,24 +312,48 @@
   .mini-btn.tel{background:var(--ember);color:#fff;}
   .mini-btn.tel:hover{transform:translateY(-2px);}
 
+  /* 画面が低いときは hero を詰める。詰めないと中身が上へはみ出し、
+     画面上部に固定されている nav の下に潜る（2026-09-29 に実際に起きた）。 */
+  @media(max-height:820px){
+    .hero{padding-top:96px;padding-bottom:44px;}
+    .hero .since{margin-bottom:16px;}
+    .hero .lead{margin-top:20px;}
+    .hero .sub{margin-top:10px;}
+    .hero-week{margin-top:14px;}
+    .hero-week + .hero-btns{margin-top:18px;}
+  }
+  @media(max-height:700px){
+    .hero{padding-top:86px;padding-bottom:36px;min-height:auto;}
+    .hero .since{margin-bottom:10px;font-size:.72rem;}
+    .hero .lead{margin-top:14px;}
+    .hero .sub{margin-top:8px;font-size:.85rem;}
+    .hero-week{margin-top:12px;}
+    .hero-week + .hero-btns{margin-top:14px;}
+    .scrollcue{display:none;}
+  }
+
   /* --- 臨時休業のお知らせ（店舗ごと・突発） --- */
   .tclose{
     display:none;background:linear-gradient(180deg,rgba(168,50,31,.92),rgba(140,38,22,.92));
     color:#fff;border-bottom:1px solid rgba(255,160,140,.4);
   }
   .tclose.on{display:block;}
-  .tclose .wrap{padding:13px 20px;display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;}
+  /* 帯が出ているときは、nav ぶんの余白は帯が受け持つ。hero は詰めてよい */
+  .tclose.on + .hero{padding-top:56px;}
+  /* ★nav は position:fixed で画面上部に貼り付いている。帯はページの先頭にあるので、
+     そのままだと nav の下に潜る。nav の高さ（約52px）ぶん下げる。 */
+  .tclose .wrap{padding:66px 20px 14px;display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;}
   .tclose .tag{flex:0 0 auto;background:#fff;color:#a8321f;font-weight:800;font-size:12px;
     letter-spacing:.08em;padding:4px 11px;border-radius:2px;}
   .tclose .body{flex:1 1 280px;min-width:0;font-size:.93rem;line-height:1.75;}
   .tclose .body b{font-size:1.02rem;}
   .tclose .body .why{display:block;opacity:.92;font-size:.86rem;}
-  @media(max-width:560px){ .tclose .wrap{gap:9px;padding:12px 16px;} }
+  @media(max-width:560px){ .tclose .wrap{gap:9px;padding:60px 16px 12px;} }
 
   /* --- hero の週カレンダー（今日から1週間・3店舗共通） --- */
   .hero-week{
     display:inline-flex;flex-direction:column;gap:7px;align-items:center;
-    margin:2px auto 24px;padding:11px 14px 12px;
+    margin:20px auto 0;padding:9px 13px 10px;
     background:rgba(12,9,7,.58);backdrop-filter:blur(7px);
     border:1px solid rgba(242,231,212,.16);border-radius:7px;
   }
@@ -339,7 +365,7 @@
     line-height:1.25;background:rgba(242,231,212,.06);
   }
   .hw-dow{font-size:.6rem;letter-spacing:.06em;opacity:.85;}
-  .hw-day{font-size:1.02rem;font-weight:700;font-family:'Shippori Mincho',serif;}
+  .hw-day{font-size:.96rem;font-weight:700;font-family:'Shippori Mincho',serif;}
   .hw-st{font-size:.58rem;margin-top:1px;}
   .hw-cell.open{color:var(--kinari);}
   .hw-cell.open .hw-st{color:#b9c77d;}
