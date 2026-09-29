@@ -310,6 +310,39 @@
   .mini-btn.tel{background:var(--ember);color:#fff;}
   .mini-btn.tel:hover{transform:translateY(-2px);}
 
+  /* --- hero の週カレンダー（今日から1週間・3店舗共通） --- */
+  .hero-week{
+    display:inline-flex;flex-direction:column;gap:7px;align-items:center;
+    margin:2px auto 24px;padding:11px 14px 12px;
+    background:rgba(12,9,7,.58);backdrop-filter:blur(7px);
+    border:1px solid rgba(242,231,212,.16);border-radius:7px;
+  }
+  .hw-head{font-size:.66rem;letter-spacing:.14em;color:var(--kinari-dim);}
+  .hw-head b{color:var(--kinari);letter-spacing:.06em;}
+  .hw-row{display:flex;gap:5px;}
+  .hw-cell{
+    min-width:46px;text-align:center;border-radius:4px;padding:5px 3px 6px;
+    line-height:1.25;background:rgba(242,231,212,.06);
+  }
+  .hw-dow{font-size:.6rem;letter-spacing:.06em;opacity:.85;}
+  .hw-day{font-size:1.02rem;font-weight:700;font-family:'Shippori Mincho',serif;}
+  .hw-st{font-size:.58rem;margin-top:1px;}
+  .hw-cell.open{color:var(--kinari);}
+  .hw-cell.open .hw-st{color:#b9c77d;}
+  .hw-cell.closed{background:#a8321f;color:#fff;}
+  .hw-cell.closed .hw-st{color:#ffdad2;font-weight:700;}
+  .hw-cell.today{outline:2px solid var(--kinari);outline-offset:-2px;}
+  .hw-cell.today.closed{outline-color:#ffe9e2;}
+  .hw-cell.sun .hw-dow{color:#e58;}
+  .hw-cell.sat .hw-dow{color:#7cb;}
+  .hw-cell.closed .hw-dow{color:#ffcfc4;}
+  @media(max-width:520px){
+    .hero-week{padding:9px 8px 10px;margin-bottom:20px;}
+    .hw-row{gap:3px;}
+    .hw-cell{min-width:38px;padding:4px 2px 5px;}
+    .hw-day{font-size:.92rem;}
+  }
+
   /* --- calendar --- */
   .cal-block{
     margin-top:54px;background:var(--sumi-3);
@@ -501,6 +534,8 @@
   </h1>
   <p class="lead">日本に、ここだけ。</p>
   <p class="sub">炭火の香りと、打ちたての蕎麦。福島の家族がつないできた味を、3つの店で。</p>
+  <!-- 今日から1週間の営業。3店舗とも同じ。データが来る前は火曜定休の仮表示で描く。 -->
+  <div class="hero-week" id="heroWeek" aria-label="今日から1週間の営業カレンダー（3店舗共通）"></div>
   <div class="hero-btns">
     <a href="#shops" class="btn btn-fill">3店舗を見る ＆ 営業カレンダー</a>
     <a href="#recruit" class="btn btn-ghost">スタッフ募集を見る</a>
@@ -905,7 +940,35 @@
     if(!_cal && !_calLoading) _calLoading = _loadCal();
   }
 
+  // hero の週カレンダー（今日から1週間）。3店舗とも同じ営業日マスタを見る。
+  //   ★月のカレンダーと同じ _cal を使うので、通信は増えない。
+  //   ★データが来る前は火曜定休の仮表示。来たら塗り直す（_paint から一緒に呼ぶ）。
+  function _paintWeek(cal){
+    const box=document.getElementById('heroWeek');
+    if(!box) return;
+    cal = cal || {};
+    const cells=[];
+    for(let i=0;i<7;i++){
+      const dt=new Date(TODAY.getFullYear(),TODAY.getMonth(),TODAY.getDate()+i);
+      const ds=dt.getFullYear()+'-'+_p2(dt.getMonth()+1)+'-'+_p2(dt.getDate());
+      const dow=dt.getDay();
+      const rec=cal[ds];
+      const isOpen = rec ? !!rec.isOpen : (dow!==2);   // 無ければ火曜定休で仮表示
+      const cls=['hw-cell', isOpen?'open':'closed'];
+      if(i===0) cls.push('today');
+      if(dow===0) cls.push('sun'); else if(dow===6) cls.push('sat');
+      cells.push('<div class="'+cls.join(' ')+'"'+(rec&&rec.memo?' title="'+rec.memo.replace(/"/g,'&quot;')+'"':'')+'>'
+        +'<div class="hw-dow">'+wdNames[dow]+'</div>'
+        +'<div class="hw-day">'+dt.getDate()+'</div>'
+        +'<div class="hw-st">'+(isOpen?'営業':'休')+'</div>'
+        +'</div>');
+    }
+    box.innerHTML='<div class="hw-head">今週の営業　<b>3店舗共通</b></div>'
+                 +'<div class="hw-row">'+cells.join('')+'</div>';
+  }
+
   function _paint(cal){
+    _paintWeek(cal);
     cal = cal || {};
     const grid=document.getElementById('calGrid');
     document.getElementById('calTitle').textContent=calY+'年 '+(calM+1)+'月';
