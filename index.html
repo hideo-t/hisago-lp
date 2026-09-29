@@ -323,8 +323,8 @@
   .cal-legend{display:flex;gap:18px;margin-top:16px;flex-wrap:wrap;}
   .cal-legend span{display:flex;align-items:center;gap:7px;font-size:.8rem;color:var(--kinari-dim);}
   .dot{width:11px;height:11px;border-radius:50%;display:inline-block;}
-  .dot.close{background:#7a3b2a;}
-  .dot.open{background:var(--soba);}
+  .dot.close{background:#a8321f;box-shadow:0 0 0 1px rgba(255,150,125,.55);}
+  .dot.open{background:#b9c77d;}
   .calendar{background:var(--sumi-2);border-radius:3px;padding:18px;border:1px solid rgba(242,231,212,.07);}
   .cal-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
   .cal-top button{
@@ -339,13 +339,20 @@
   .cal-grid .wd.sat{color:#5a8;}
   .cal-cell{
     aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    border-radius:2px;font-size:.8rem;background:rgba(242,231,212,.03);position:relative;
+    border-radius:3px;font-size:.82rem;background:rgba(242,231,212,.03);position:relative;
   }
   .cal-cell.empty{background:transparent;}
-  .cal-cell.closed{background:rgba(122,59,42,.32);color:#e9b4a0;}
-  .cal-cell.closed::after{content:"休";font-size:.56rem;color:#e9907a;margin-top:1px;}
-  .cal-cell.today{outline:2px solid var(--ember);outline-offset:-2px;font-weight:700;}
-  .cal-cell.open-mark::after{content:"";width:5px;height:5px;border-radius:50%;background:var(--soba);margin-top:3px;}
+  /* 営業日: うっすら明るく。月の外の空白と見分けがつく程度でよい */
+  .cal-cell.open-mark{background:rgba(242,231,212,.09);color:var(--kinari);}
+  .cal-cell.open-mark::after{content:"";width:6px;height:6px;border-radius:50%;
+    background:#b9c77d;margin-top:3px;}
+  /* 休業: はっきり赤。お客さんが探しているのはこちら */
+  .cal-cell.closed{background:#a8321f;color:#fff;font-weight:700;
+    box-shadow:inset 0 0 0 1px rgba(255,150,125,.55);}
+  .cal-cell.closed::after{content:"休";font-size:.66rem;font-weight:700;color:#ffdad2;margin-top:1px;}
+  /* 今日: 赤と紛れないよう、生成りの太枠にする */
+  .cal-cell.today{outline:2px solid var(--kinari);outline-offset:-2px;font-weight:700;}
+  .cal-cell.today.closed{outline-color:#ffe9e2;}
 
   /* --- recruit --- */
   #recruit{
@@ -656,7 +663,7 @@
         <p style="color:var(--kinari);font-size:.86rem;">※ お客さまの口コミにも「定休日が分かりにくい」の声。ここで解決します。</p>
         <div class="cal-legend">
           <span><i class="dot open"></i>営業日</span>
-          <span><i class="dot close"></i>定休・休業</span>
+          <span><i class="dot close"></i><b style="color:#f0a294">休</b>＝定休・休業</span>
         </div>
       </div>
       <div class="calendar">
@@ -830,21 +837,76 @@
   let calY=_now.getFullYear(), calM=_now.getMonth();
   const TODAY=new Date(_now.getFullYear(),_now.getMonth(),_now.getDate());
   const wdNames=['日','月','火','水','木','金','土'];
-  const _calCache={};
   const _p2=n=>(n<10?'0':'')+n;
-  async function _fetchMonth(y,m){
-    const key=y+'-'+_p2(m+1);
-    if(_calCache[key]) return _calCache[key];
-    const from=y+'-'+_p2(m+1)+'-01';
-    const to=y+'-'+_p2(m+1)+'-'+_p2(new Date(y,m+1,0).getDate());
-    try{
-      const res=await fetch(CAL_GAS_URL+'?action=business_calendar&from='+from+'&to='+to+'&_='+Date.now());
-      const data=await res.json();
-      _calCache[key]=(data&&data.cal)||{};
-    }catch(e){ _calCache[key]={}; }
-    return _calCache[key];
+
+  // 営業カレンダーの出どころ（2026-09-29）
+  //   ①同梱の calendar.json を読む。GitHub Pages の CDN から数十ミリ秒で届く。
+  //   ②そのあと裏で GAS にも聞いて、JSONを作ったあとの変更を拾う。違えば塗り直す。
+  //
+  //   ★以前はサイトから直接 GAS を呼んでいた。1回 2.5〜4秒かかる（実測）。
+  //     重いのはスプレッドシートの読み取りではなく、GAS のウェブアプリの往復。
+  //     サーバ側にキャッシュを置いても1秒しか縮まなかった。だから待たない作りにした。
+  //   ★しかも月をめくるたびに呼び、&_=Date.now() まで付いていたので、
+  //     ブラウザにもCDNにも一切キャッシュされていなかった。
+  //   ★GASが遅くても止まっていても、①だけで正しく出る。
+  //
+  //   calendar.json は tools/build_calendar.py で作り直す。
+  //   更新を忘れても、②が最大30分（サーバ側キャッシュ）で追いつく。
+  let _cal = null;                 // 日付 → {isOpen, memo}
+  let _calLoading = null;
+
+  function _calRange(){
+    const a=new Date(_now.getFullYear(), _now.getMonth()-4, 1);
+    const b=new Date(_now.getFullYear(), _now.getMonth()+16, 0);
+    const f=d=>d.getFullYear()+'-'+_p2(d.getMonth()+1)+'-'+_p2(d.getDate());
+    return [f(a), f(b)];
   }
-  async function renderCal(){
+
+  // 同梱JSONは {o:0|1, m:"メモ"}、GASは {isOpen, memo}。画面で使う形にそろえる。
+  function _norm(src, isStatic){
+    const out={};
+    for(const k in src){
+      const v=src[k]||{};
+      out[k] = isStatic ? {isOpen: !!v.o, memo: v.m||''}
+                        : {isOpen: !!v.isOpen, memo: v.memo||''};
+    }
+    return out;
+  }
+
+  function _loadCal(){
+    // ① 同梱のJSON。no-cache にしておくと、更新を push した直後から反映される
+    //    （中身が同じなら 304 が返るだけなので、速さはほとんど変わらない）。
+    return fetch('calendar.json', {cache:'no-cache'})
+      .then(r=>r.json())
+      .then(d=>{ _cal=_norm(d.cal||{}, true); _paint(_cal); })
+      .catch(()=>{ if(!_cal) _cal={}; })
+      .then(_refreshFromGas);
+  }
+
+  // ② 裏取り。遅くても画面はもう出ているので、待たせない。
+  function _refreshFromGas(){
+    const [from,to]=_calRange();
+    return fetch(CAL_GAS_URL+'?action=business_calendar&from='+from+'&to='+to)
+      .then(r=>r.json())
+      .then(d=>{
+        if(!d||!d.cal) return;
+        const fresh=_norm(d.cal, false);
+        if(Object.keys(fresh).length && JSON.stringify(fresh)!==JSON.stringify(_cal)){
+          _cal=fresh; _paint(_cal);
+        }
+      })
+      .catch(()=>{});
+  }
+
+  // データが来ていなくても、まず火曜定休の仮表示で描く。来たら塗り直す。
+  //   白い四角を見せて待たせない。
+  function renderCal(){
+    _paint(_cal);                                   // いま持っているもので即描く
+    if(!_cal && !_calLoading) _calLoading = _loadCal();
+  }
+
+  function _paint(cal){
+    cal = cal || {};
     const grid=document.getElementById('calGrid');
     document.getElementById('calTitle').textContent=calY+'年 '+(calM+1)+'月';
     grid.innerHTML='';
@@ -853,7 +915,6 @@
       c.className='wd'+(i===0?' sun':i===6?' sat':'');
       c.textContent=w;grid.appendChild(c);
     });
-    const cal=await _fetchMonth(calY,calM);
     const first=new Date(calY,calM,1).getDay();
     const days=new Date(calY,calM+1,0).getDate();
     for(let i=0;i<first;i++){
