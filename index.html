@@ -348,6 +348,13 @@
   .tclose .body{flex:1 1 280px;min-width:0;font-size:.93rem;line-height:1.75;}
   .tclose .body b{font-size:1.02rem;}
   .tclose .body .why{display:block;opacity:.92;font-size:.86rem;}
+  /* ★直近（今日〜7日）と、先の予定を見分ける。
+     どちらも出すが、同じ強さにすると「いつも赤い」状態になって読まれなくなる。 */
+  .tclose .body .now{margin-bottom:6px;}
+  .tclose .body .far{opacity:.78;font-size:.9rem;margin-bottom:4px;}
+  .tclose .body .far b{font-size:.95rem;font-weight:700;}
+  .tclose .body .lead{display:inline-block;background:rgba(255,255,255,.18);
+    border-radius:2px;padding:0 6px;margin-right:7px;font-size:.76rem;font-weight:700;}
   @media(max-width:560px){ .tclose .wrap{gap:9px;padding:60px 16px 12px;} }
 
   /* --- hero の週カレンダー（今日から1週間・3店舗共通） --- */
@@ -400,6 +407,7 @@
   .dot{width:11px;height:11px;border-radius:50%;display:inline-block;}
   .dot.close{background:#a8321f;box-shadow:0 0 0 1px rgba(255,150,125,.55);}
   .dot.open{background:#b9c77d;}
+  .dot.temp{background:transparent;box-shadow:inset 0 0 0 2px #ffd166;}
   .calendar{background:var(--sumi-2);border-radius:3px;padding:18px;border:1px solid rgba(242,231,212,.07);}
   .cal-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
   .cal-top button{
@@ -425,6 +433,16 @@
   .cal-cell.closed{background:#a8321f;color:#fff;font-weight:700;
     box-shadow:inset 0 0 0 1px rgba(255,150,125,.55);}
   .cal-cell.closed::after{content:"休";font-size:.66rem;font-weight:700;color:#ffdad2;margin-top:1px;}
+  /* 臨時休業（店舗ごと）。定休の赤とは別物なので、黄色の枠と店名で区別する。
+     ★1店だけの休業で その日を全部赤くすると、他2店のお客様が来なくなる。
+       だから営業／休の色はそのままにして、店名つきの印を重ねる。 */
+  .cal-cell.temp{box-shadow:inset 0 0 0 2px #ffd166;}
+  .cal-cell.temp::after{display:none;}      /* 既定の印（●／休）は消して店名を出す */
+  .cal-cell .ct{
+    font-size:.5rem;line-height:1.15;margin-top:2px;font-weight:700;color:#ffd166;
+    text-align:center;max-width:100%;letter-spacing:0;
+  }
+  .cal-cell.closed .ct{color:#ffe9b0;}
   /* 今日: 赤と紛れないよう、生成りの太枠にする */
   .cal-cell.today{outline:2px solid var(--kinari);outline-offset:-2px;font-weight:700;}
   .cal-cell.today.closed{outline-color:#ffe9e2;}
@@ -746,6 +764,7 @@
         <div class="cal-legend">
           <span><i class="dot open"></i>営業日</span>
           <span><i class="dot close"></i><b style="color:#f0a294">休</b>＝定休・休業</span>
+          <span><i class="dot temp"></i><b style="color:#ffd166">黄枠</b>＝臨時休業（店名を表示）</span>
         </div>
       </div>
       <div class="calendar">
@@ -938,6 +957,7 @@
   let _temp = [];                  // 臨時休業 [{store,date,note}]
   let _calLoading = null;
   const SLABEL={A:'石川店',B:'白河店',C:'須賀川店'};
+  const SSHORT={A:'石川',B:'白河',C:'須賀'};      // カレンダーのセル用（幅が狭い）
 
   function _calRange(){
     const a=new Date(_now.getFullYear(), _now.getMonth()-4, 1);
@@ -975,7 +995,9 @@
       .then(d=>{
         if(!d) return;
         // 臨時休業は静的JSONに入れない（速報性が要るので、必ず最新を使う）
-        if(Array.isArray(d.temp)){ _temp=d.temp; _paintTemp(); }
+        //   ★_paintTemp() だけでは帯しか変わらない。月のカレンダーと hero の週にも
+        //     臨時休業を出すので、_paint() も呼んで塗り直す（2026-10-10 の取りこぼし）。
+        if(Array.isArray(d.temp)){ _temp=d.temp; _paintTemp(); _paint(_cal); }
         if(!d.cal) return;
         const fresh=_norm(d.cal, false);
         if(Object.keys(fresh).length && JSON.stringify(fresh)!==JSON.stringify(_cal)){
@@ -992,26 +1014,38 @@
     if(!_cal && !_calLoading) _calLoading = _loadCal();
   }
 
-  // 臨時休業のお知らせ帯。今日から1週間ぶんだけ出す。
-  //   ★遠い先のぶんまで出すと、いつも赤い帯が出ている状態になって読まれなくなる。
+  // 臨時休業のお知らせ帯（hero の直下）。★これが本来の表示場所。
+  //   2026-10-10 まで「今日から7日」に限っていたため、51日先に登録した白河店の
+  //   臨時休業がサイトのどこにも出なかった（店長から報告）。
+  //   帯が常時赤くなるのを避けたかったのが理由だが、絞りすぎて
+  //   「登録しても出ない」状態になっていた。
+  //
+  //   ★直近（今日〜7日）は強く、先の予定は控えめに、どちらも出す。
+  //     こうすれば「いつも同じ赤」にはならず、登録した人も確かめられる。
+  //   ★長くなりすぎないよう4件まで。残りは件数だけ添える。
   //   ★1件も無ければ帯ごと出さない。
+  const TC_MAX=4;
   function _paintTemp(){
     const sec=document.getElementById('tempClose');
     const box=document.getElementById('tempCloseBody');
     if(!sec||!box) return;
     const from=TODAY.getFullYear()+'-'+_p2(TODAY.getMonth()+1)+'-'+_p2(TODAY.getDate());
     const lim=new Date(TODAY.getFullYear(),TODAY.getMonth(),TODAY.getDate()+7);
-    const to=lim.getFullYear()+'-'+_p2(lim.getMonth()+1)+'-'+_p2(lim.getDate());
-    const near=(_temp||[]).filter(t=>t.date>=from&&t.date<=to);
-    if(!near.length){ sec.classList.remove('on'); box.innerHTML=''; return; }
-    box.innerHTML=near.map(t=>{
+    const soon=lim.getFullYear()+'-'+_p2(lim.getMonth()+1)+'-'+_p2(lim.getDate());
+    const up=(_temp||[]).filter(t=>t.date>=from);          // 今日以降ぜんぶ
+    if(!up.length){ sec.classList.remove('on'); box.innerHTML=''; return; }
+    const show=up.slice(0,TC_MAX), rest=up.length-show.length;
+    box.innerHTML=show.map(t=>{
       const d=new Date(t.date+'T00:00:00');
       const when=(t.date===from)?'本日':((d.getMonth()+1)+'月'+d.getDate()+'日('+wdNames[d.getDay()]+')');
       const name=SLABEL[t.store]||t.store;
-      return '<div><b>'+when+'　'+_esc(name)+' は臨時休業とさせていただきます</b>'
+      const far=(t.date>soon);                             // 1週間より先
+      return '<div class="'+(far?'far':'now')+'">'
+           + (far?'<span class="lead">このあと</span>':'')
+           + '<b>'+when+'　'+_esc(name)+' は臨時休業とさせていただきます</b>'
            + (t.note?'<span class="why">'+_esc(t.note)+'</span>':'')
            + '</div>';
-    }).join('');
+    }).join('') + (rest>0?'<div class="far"><span class="lead">ほか '+rest+'件</span></div>':'');
     sec.classList.add('on');
   }
   function _esc(v){
@@ -1078,6 +1112,23 @@
       const isOpen = rec ? !!rec.isOpen : (dow!==2);   // データがあればそれが正・無ければ火曜定休で仮表示
       cell.classList.add(isOpen?'open-mark':'closed');
       if(rec&&rec.memo){ cell.title=rec.memo; }
+
+      // ★臨時休業（店舗ごと）。営業／休の色はそのまま残し、店名つきの印を重ねる。
+      //   1店だけの休業でその日を全部赤くすると、他2店のお客様が来なくなる。
+      const tmp=(_temp||[]).filter(t=>t.date===ds);
+      if(tmp.length){
+        cell.classList.add('temp');
+        const lab=document.createElement('span');
+        lab.className='ct';
+        // 1店なら店名、2店なら件数、全店そろえば「全店休」。くわしくは上の帯と吹き出しで。
+        lab.textContent = (tmp.length>=3) ? '全店休'
+                        : (tmp.length===1) ? ((SSHORT[tmp[0].store]||tmp[0].store)+'休')
+                        : (tmp.length+'店休');
+        cell.appendChild(lab);
+        cell.title = tmp.map(t=>(SLABEL[t.store]||t.store)+' 臨時休業'
+                    + (t.note?'（'+t.note+'）':'')).join(' / ');
+      }
+
       if(calY===TODAY.getFullYear()&&calM===TODAY.getMonth()&&d===TODAY.getDate()){
         cell.classList.add('today');
       }
