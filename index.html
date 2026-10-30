@@ -252,9 +252,9 @@
   #menu{background:var(--sumi-2);}
   .menu-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;margin-bottom:46px;}
   .menu-head p{color:var(--kinari-dim);max-width:420px;font-size:.96rem;}
-  .menu-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+  .menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
   .dish{
-    position:relative;border-radius:3px;overflow:hidden;aspect-ratio:3/4;
+    position:relative;border-radius:3px;overflow:hidden;aspect-ratio:4/3;
     background:#100c0a center/cover no-repeat;
     display:flex;align-items:flex-end;
     transition:transform .4s cubic-bezier(.2,.7,.2,1);
@@ -660,11 +660,33 @@
       </div>
       <p>「焼肉のあとに、さらっとそば」——県内のお客さまに50年愛されてきた、ひさごの定番をご紹介します。</p>
     </div>
-    <div class="reveal" style="background:linear-gradient(135deg,rgba(192,162,90,.08),rgba(0,0,0,.15));border:1px dashed rgba(192,162,90,.4);border-radius:16px;padding:52px 24px;text-align:center;color:#8a7f78">
-      <div style="font-size:42px">📷</div>
-      <div style="font-weight:800;color:#c0a25a;font-size:1.15rem;margin-top:10px">お品書き（写真）準備中</div>
-      <div style="font-size:.88rem;margin-top:8px">ただいま撮影・準備中です。近日公開します。</div>
+    <div class="menu-grid reveal">
+      <div class="dish" style="background-image:url('images/dish-yamagata-karubi.jpg')">
+        <span class="tag">焼肉</span>
+        <div class="info"><div class="ja">山形カルビ</div><div class="desc">きれいなサシを、まずは塩で一枚。</div></div>
+      </div>
+      <div class="dish" style="background-image:url('images/dish-family-set.jpg')">
+        <span class="tag">盛合せ</span>
+        <div class="info"><div class="ja">ファミリーセット</div><div class="desc">みんなで囲む、彩りの大皿。</div></div>
+      </div>
+      <div class="dish" style="background-image:url('images/dish-karubi-ramen.jpg')">
+        <span class="tag">麺</span>
+        <div class="info"><div class="ja">カルビラーメン</div><div class="desc">炙りカルビをのせて、〆の一杯に。</div></div>
+      </div>
+      <div class="dish" style="background-image:url('images/dish-soba-karubi-set.jpg')">
+        <span class="tag">セット</span>
+        <div class="info"><div class="ja">ミニそば＆黒毛カルビ</div><div class="desc">手打ちそばと黒毛カルビを少しずつ。</div></div>
+      </div>
+      <div class="dish" style="background-image:url('images/dish-ebiten-set.jpg')">
+        <span class="tag">セット</span>
+        <div class="info"><div class="ja">ミニ海老天丼セット</div><div class="desc">海老天と手打ちそばのミニ御膳。</div></div>
+      </div>
+      <div class="dish" style="background-image:url('images/dish-ishiyaki-bibimba.jpg')">
+        <span class="tag">ご飯</span>
+        <div class="info"><div class="ja">石焼ビビンバ</div><div class="desc">熱々の石鍋で、おこげまで旨い。</div></div>
+      </div>
     </div>
+    <p class="menu-note">※ 写真は一例です。お品書きの詳細は各店へお問い合わせください。</p>
   </div>
 </section>
 
